@@ -28,8 +28,26 @@ export interface GBDocument {
   modified: boolean;
 }
 
+/**
+ * The "Choose a Project" chooser runs modally and blocks GarageBand's Apple
+ * Event queue (a `count documents` sent then hangs until osascript times out).
+ * Detect it via System Events, which stays responsive.
+ */
+export async function chooserOpen(): Promise<boolean> {
+  try {
+    const out = await runAppleScript(
+      `tell application "System Events" to tell process "GarageBand" to get name of windows`,
+      5000,
+    );
+    return /choose a project|project chooser/i.test(out);
+  } catch {
+    return false;
+  }
+}
+
 export async function documentCount(): Promise<number> {
   if (!(await isRunning())) return 0;
+  if (await chooserOpen()) return 0;
   const out = await runAppleScript(`tell application ${APP} to count documents`);
   return parseInt(out, 10) || 0;
 }
@@ -76,6 +94,13 @@ export async function closeFrontDocument(saving: "yes" | "no" | "ask"): Promise<
 }
 
 export async function requireProject(): Promise<void> {
+  if (await chooserOpen()) {
+    throw new GBError(
+      "NO_PROJECT",
+      "GarageBand is showing the project chooser — no project is open.",
+      "Use gb_new_project to create one from the chooser, or gb_open_project with a path.",
+    );
+  }
   if ((await documentCount()) === 0) {
     throw new GBError(
       "NO_PROJECT",

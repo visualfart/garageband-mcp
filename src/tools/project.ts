@@ -16,12 +16,15 @@ export function registerProjectTools(server: McpServer): void {
     async () =>
       guarded(async () => {
         await gb.launchAndWait();
+        if (await gb.chooserOpen()) {
+          return ok(
+            "GarageBand is running and showing the project chooser. Use gb_new_project to create a project, or gb_open_project with a path.",
+          );
+        }
         const n = await gb.documentCount();
         return ok(
           `GarageBand is running and frontmost. Open projects: ${n}.` +
-            (n === 0
-              ? " No project is open — the project chooser may be showing; use gb_new_project or gb_open_project."
-              : ""),
+            (n === 0 ? " No project is open — use gb_new_project or gb_open_project." : ""),
         );
       }),
   );
@@ -38,11 +41,14 @@ export function registerProjectTools(server: McpServer): void {
       guarded(async () => {
         await gb.launchAndWait();
         await ui.ensureReady();
-        // Cmd+N opens the project chooser with "Empty Project" selected by default;
-        // Return confirms it, and a second Return accepts the default track type
-        // (Software Instrument) if that dialog appears.
-        await ui.keystroke("n", ["command"]);
-        await sleep(1500);
+        // Cmd+N opens the project chooser with "Empty Project" selected by default
+        // (skip it if the chooser is already showing); Return confirms it, and a
+        // second Return accepts the default track type (Software Instrument) if
+        // that dialog appears.
+        if (!(await gb.chooserOpen())) {
+          await ui.keystroke("n", ["command"]);
+          await sleep(1500);
+        }
         await ui.keyCode(ui.KEY.RETURN);
         await sleep(2000);
         await ui.keyCode(ui.KEY.RETURN);

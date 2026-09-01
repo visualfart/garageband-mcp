@@ -238,27 +238,6 @@ export async function waitForSheet(present: boolean, timeoutMs = 5000): Promise<
   return false;
 }
 
-/** True double-click at screen coordinates via a CGEvent (System Events can't synthesize one). */
-export async function doubleClickAt(x: number, y: number): Promise<void> {
-  const script = `
-    ObjC.import('CoreGraphics');
-    const pt = { x: ${x}, y: ${y} };
-    function click(clickState) {
-      const down = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseDown, pt, $.kCGMouseButtonLeft);
-      $.CGEventSetIntegerValueField(down, $.kCGMouseEventClickState, clickState);
-      $.CGEventPost($.kCGHIDEventTap, down);
-      const up = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseUp, pt, $.kCGMouseButtonLeft);
-      $.CGEventSetIntegerValueField(up, $.kCGMouseEventClickState, clickState);
-      $.CGEventPost($.kCGHIDEventTap, up);
-    }
-    click(1);
-    delay(0.08);
-    click(2);
-    'OK';
-  `;
-  await runJXA(script);
-}
-
 export interface WindowBounds {
   x: number;
   y: number;

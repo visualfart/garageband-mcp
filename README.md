@@ -82,7 +82,7 @@ The first tool call will surface what's missing (run `gb_check_permissions`), bu
 ## Limitations
 
 - GarageBand must be frontmost during UI operations (the server brings it forward).
-- `gb_set_tempo` edits the LCD via accessibility — the least reliable tool; it verifies by reading back and tells you if it didn't take.
+- `gb_set_tempo` writes the LCD tempo slider's accessibility value and verifies by reading back; the LCD must be in a mode that shows tempo (the default).
 - `gb_export_song` can't fully control the destination folder in every GarageBand version; it watches the filesystem and reports where the file landed.
 - New projects use the Empty Project template.
 - Menu automation assumes English localization.
