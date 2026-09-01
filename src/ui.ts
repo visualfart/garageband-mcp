@@ -238,6 +238,21 @@ export async function waitForSheet(present: boolean, timeoutMs = 5000): Promise<
   return false;
 }
 
+/** Click at absolute screen coordinates via a CGEvent (works regardless of AX actions). */
+export async function clickAt(x: number, y: number): Promise<void> {
+  const script = `
+    ObjC.import('CoreGraphics');
+    const pt = { x: ${x}, y: ${y} };
+    const down = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseDown, pt, $.kCGMouseButtonLeft);
+    $.CGEventPost($.kCGHIDEventTap, down);
+    delay(0.04);
+    const up = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseUp, pt, $.kCGMouseButtonLeft);
+    $.CGEventPost($.kCGHIDEventTap, up);
+    'OK';
+  `;
+  await runJXA(script);
+}
+
 export interface WindowBounds {
   x: number;
   y: number;

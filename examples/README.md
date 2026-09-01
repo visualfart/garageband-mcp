@@ -30,7 +30,7 @@ node examples/play.mjs examples/edm-anthem.json
 
 - Multi-layer songs play as a full mix on the selected instrument (GarageBand routes live MIDI to one track).
 - `--layer bass` plays just that layer; `--record --layer drums` records it into the project.
-- **To build the real arrangement**: record one layer, add a new software-instrument track in GarageBand (pick the right instrument), record the next layer, and so on. An MCP agent does this with `gb_record_sequence` + `gb_add_software_instrument_track`.
+- **To build the real arrangement**: for each layer — add a track (`gb_add_software_instrument_track`), give it its instrument (`gb_set_track_instrument`, e.g. "Drum Kit", "Fingerstyle Bass", "Cinematic"), then record (`gb_record_sequence`). Set the instrument *before* recording.
 
 ## Format
 

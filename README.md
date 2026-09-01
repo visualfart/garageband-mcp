@@ -20,14 +20,14 @@ Ready-made music lives in [`examples/`](examples/) — from a simple melody to f
 node examples/play.mjs examples/edm-anthem.json
 ```
 
-## Tools (31)
+## Tools (33)
 
 | Domain | Tools |
 |---|---|
 | Compose 🎹 | `gb_play_note`, `gb_play_chord`, `gb_play_sequence` (live audition), `gb_play_song` (multi-layer arrangements), `gb_record_sequence` (records into the project), `gb_all_notes_off` |
 | Project | `gb_launch`, `gb_new_project`, `gb_open_project`, `gb_save_project`, `gb_close_project`, `gb_list_projects` |
 | Transport | `gb_play`, `gb_stop`, `gb_record`, `gb_go_to_beginning` (verified rewind), `gb_set_playhead`, `gb_toggle_cycle`, `gb_toggle_metronome`, `gb_toggle_count_in` |
-| Tracks | `gb_add_software_instrument_track`, `gb_delete_selected_track`, `gb_select_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
+| Tracks | `gb_add_software_instrument_track`, `gb_set_track_instrument` (Library patch search), `gb_list_tracks`, `gb_select_track` (clicks track headers), `gb_delete_selected_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
 | Tempo | `gb_get_tempo`, `gb_set_tempo` |
 | Export | `gb_export_song` (AAC / MP3 / AIFF) |
 | Inspect | `gb_check_permissions`, `gb_ui_state`, `gb_screenshot` |
@@ -135,7 +135,7 @@ The first tool call will surface what's missing (run `gb_check_permissions`), bu
 
 ## Limitations
 
-- GarageBand routes live MIDI to the one selected track, so `gb_play_song` auditions a whole mix on a single instrument. Real multi-instrument arrangements are built by recording layer by layer (`gb_record_sequence` + `gb_add_software_instrument_track`).
+- GarageBand routes live MIDI to the one selected track, so `gb_play_song` auditions a whole mix on a single instrument. Real multi-instrument arrangements are built layer by layer: `gb_add_software_instrument_track` → `gb_set_track_instrument` → `gb_record_sequence`, per layer.
 - GarageBand must be frontmost during UI operations (the server brings it forward).
 - `gb_set_tempo` writes the LCD tempo slider's accessibility value and verifies by reading back; the LCD must be in a mode that shows tempo (the default).
 - `gb_export_song` can't fully control the destination folder in every GarageBand version; it watches the filesystem and reports where the file landed.

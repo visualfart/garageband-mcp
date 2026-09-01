@@ -2,7 +2,89 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ok, guarded, GBError } from "../errors.js";
 import * as ui from "../ui.js";
-import { sleep } from "../osa.js";
+import { sleep, runJXA } from "../osa.js";
+
+interface AxHit {
+  role: string;
+  text: string;
+  pos: [number, number] | null;
+  size: [number, number] | null;
+}
+
+/**
+ * BFS a top-level window group (description "Tracks" / "Library") collecting
+ * elements matched by the given predicates, expressed as JXA source snippets.
+ */
+function groupScanScript(groupDesc: string, matchExpr: string, cap: number): string {
+  return `
+    const se = Application('System Events');
+    const p = se.processes['GarageBand'];
+    const w = p.windows[0];
+    let root = null;
+    try {
+      const g = w.uiElements.whose({description: ${JSON.stringify(groupDesc)}});
+      if (g.length > 0) root = g[0];
+    } catch (e) {}
+    if (root === null) {
+      'NOGROUP';
+    } else {
+      const found = [];
+      const queue = [root];
+      let visited = 0;
+      while (queue.length > 0 && visited < 600 && found.length < ${cap}) {
+        const el = queue.shift();
+        visited++;
+        let role = '', desc = '', value = '';
+        try { role = String(el.role() || ''); } catch (e) {}
+        try { desc = String(el.description() || ''); } catch (e) {}
+        try { const v = el.value(); if (v !== null && v !== undefined) value = String(v); } catch (e) {}
+        if (${matchExpr}) {
+          let pos = null, size = null;
+          try { pos = el.position(); } catch (e) {}
+          try { size = el.size(); } catch (e) {}
+          found.push({ role: role, text: value || desc, pos: pos, size: size });
+        }
+        try {
+          const kids = el.uiElements();
+          for (let i = 0; i < kids.length; i++) queue.push(kids[i]);
+        } catch (e) {}
+      }
+      JSON.stringify(found);
+    }
+  `;
+}
+
+async function scanGroup(groupDesc: string, matchExpr: string, cap = 40): Promise<AxHit[] | null> {
+  const out = await runJXA(groupScanScript(groupDesc, matchExpr, cap), 45_000);
+  if (out === "NOGROUP") return null;
+  return JSON.parse(out) as AxHit[];
+}
+
+/** Track headers in the Tracks area, sorted top-to-bottom. */
+async function listTrackHeaders(): Promise<AxHit[]> {
+  const hits = await scanGroup(
+    "Tracks",
+    `role !== 'AXGroup' && /track header|^track \\d/i.test(desc)`,
+  );
+  if (hits === null) {
+    throw new GBError(
+      "ELEMENT_NOT_FOUND",
+      "Could not find the Tracks area in the window.",
+      "Is a project open? gb_ui_state / gb_screenshot can show the current state.",
+    );
+  }
+  return hits
+    .filter((h) => h.pos && h.size)
+    .sort((a, b) => a.pos![1] - b.pos![1]);
+}
+
+/** Click a track header (left side, near the name — clear of mute/solo/volume). */
+async function clickTrackHeader(h: AxHit): Promise<void> {
+  const [x, y] = h.pos!;
+  const [, hgt] = h.size!;
+  await ui.clickAt(x + 40, y + Math.min(hgt / 2, 30));
+  await sleep(300);
+}
 
 export function registerTrackTools(server: McpServer): void {
   server.registerTool(
@@ -50,19 +132,52 @@ export function registerTrackTools(server: McpServer): void {
   );
 
   server.registerTool(
+    "gb_list_tracks",
+    {
+      title: "List tracks",
+      description:
+        "List the project's tracks top-to-bottom by reading the Tracks area's accessibility tree. Use the indices with gb_select_track.",
+      inputSchema: {},
+    },
+    async () =>
+      guarded(async () => {
+        await ui.ensureReady({ needsProject: true });
+        const headers = await listTrackHeaders();
+        if (headers.length === 0) return ok("No track headers found — the project may have no tracks.");
+        return ok(headers.map((h, i) => `${i + 1}. ${h.text}`).join("\n"));
+      }),
+  );
+
+  server.registerTool(
     "gb_select_track",
     {
       title: "Select track",
       description:
-        'Move track selection with arrow keys: direction "up"/"down", repeated `count` times.',
+        "Select a track. Prefer `index` (1 = top): it clicks the track header directly, which works no matter where keyboard focus is. `direction` moves with arrow keys — avoid it after Library interactions, since arrows then navigate patches instead of tracks.",
       inputSchema: {
-        direction: z.enum(["up", "down"]).describe("Direction to move the selection"),
-        count: z.number().int().min(1).max(32).optional().describe("Steps to move (default 1)"),
+        index: z.number().int().min(1).max(64).optional().describe("Track number from the top (preferred)"),
+        direction: z.enum(["up", "down"]).optional().describe("Arrow-key fallback"),
+        count: z.number().int().min(1).max(32).optional().describe("Steps for direction mode (default 1)"),
       },
     },
-    async ({ direction, count }) =>
+    async ({ index, direction, count }) =>
       guarded(async () => {
         await ui.ensureReady({ needsProject: true });
+        if (index !== undefined) {
+          const headers = await listTrackHeaders();
+          if (index > headers.length) {
+            throw new GBError(
+              "INVALID_INPUT",
+              `Track ${index} does not exist — found ${headers.length} tracks.`,
+              "gb_list_tracks shows what is there.",
+            );
+          }
+          await clickTrackHeader(headers[index - 1]);
+          return ok(`Selected track ${index}: ${headers[index - 1].text}`);
+        }
+        if (!direction) {
+          throw new GBError("INVALID_INPUT", "Pass `index` (preferred) or `direction`.");
+        }
         const code = direction === "up" ? 126 : 125;
         const steps = count ?? 1;
         for (let i = 0; i < steps; i++) {
@@ -70,6 +185,107 @@ export function registerTrackTools(server: McpServer): void {
           await sleep(120);
         }
         return ok(`Selection moved ${direction} ${steps} track(s).`);
+      }),
+  );
+
+  server.registerTool(
+    "gb_set_track_instrument",
+    {
+      title: "Set track instrument",
+      description:
+        "Give the selected track an instrument by driving the Library: shows the Library, searches for the patch (e.g. \"Drum Kit\", \"Fingerstyle Bass\", \"Cinematic Strings\", \"Brass Section\"), clicks the best-matching result, then clears the search and clicks the track header to move focus back to the Tracks area. Pass trackIndex to select the track first. Do this BEFORE recording onto the track.",
+      inputSchema: {
+        instrument: z.string().min(2).describe("Patch name to search for in the Library"),
+        trackIndex: z.number().int().min(1).max(64).optional().describe("Select this track first (1 = top)"),
+      },
+    },
+    async ({ instrument, trackIndex }) =>
+      guarded(async () => {
+        await ui.ensureReady({ needsProject: true });
+        let header: AxHit | null = null;
+        if (trackIndex !== undefined) {
+          const headers = await listTrackHeaders();
+          if (trackIndex > headers.length) {
+            throw new GBError("INVALID_INPUT", `Track ${trackIndex} does not exist — found ${headers.length} tracks.`);
+          }
+          header = headers[trackIndex - 1];
+          await clickTrackHeader(header);
+        }
+
+        // make sure the Library panel is visible ("Show Library" only exists while hidden)
+        try {
+          await ui.clickMenu(["View", "Show Library"]);
+          await sleep(600);
+        } catch (e) {
+          if (!(e instanceof GBError && e.code === "MENU_NOT_FOUND")) throw e;
+        }
+
+        const fields = await scanGroup("Library", `role === 'AXTextField'`, 3);
+        if (fields === null) {
+          throw new GBError(
+            "ELEMENT_NOT_FOUND",
+            "Library panel not found in the window even after View ▸ Show Library.",
+          );
+        }
+        const field = fields.find((f) => f.pos && f.size);
+        if (!field) {
+          throw new GBError(
+            "ELEMENT_NOT_FOUND",
+            "No search field found in the Library panel.",
+            "gb_screenshot shows what the Library looks like on this version.",
+          );
+        }
+        const fieldCenter: [number, number] = [
+          field.pos![0] + field.size![0] / 2,
+          field.pos![1] + field.size![1] / 2,
+        ];
+        await ui.clickAt(...fieldCenter);
+        await sleep(250);
+        await ui.keystroke("a", ["command"]);
+        await ui.keystroke(instrument);
+        await ui.keyCode(ui.KEY.RETURN);
+        await sleep(1000);
+
+        const rows = await scanGroup(
+          "Library",
+          `role === 'AXStaticText' && value.length > 1`,
+          60,
+        );
+        const q = instrument.toLowerCase();
+        const candidates = (rows ?? []).filter((r) => r.pos && r.size);
+        const match =
+          candidates.find((r) => r.text.toLowerCase() === q) ??
+          candidates.find((r) => r.text.toLowerCase().includes(q)) ??
+          candidates.find((r) => q.split(/\s+/).every((w) => r.text.toLowerCase().includes(w)));
+        if (!match) {
+          throw new GBError(
+            "ELEMENT_NOT_FOUND",
+            `No Library result matching "${instrument}". Texts visible: ${candidates
+              .slice(0, 20)
+              .map((r) => r.text)
+              .join(" | ")}`,
+            "Try a different search term (patch names vary by GarageBand sound library).",
+          );
+        }
+        await ui.clickAt(match.pos![0] + match.size![0] / 2, match.pos![1] + match.size![1] / 2);
+        await sleep(800);
+
+        // clear the search and hand keyboard focus back to the Tracks area
+        await ui.clickAt(...fieldCenter);
+        await sleep(200);
+        await ui.keystroke("a", ["command"]);
+        await ui.keyCode(ui.KEY.DELETE);
+        await ui.keyCode(ui.KEY.ESCAPE);
+        await sleep(200);
+        if (!header) {
+          const headers = await listTrackHeaders().catch(() => []);
+          header = headers.find((h) => h.pos && h.size) ?? null;
+        }
+        if (header) await clickTrackHeader(header);
+
+        return ok(
+          `Clicked Library patch "${match.text}"${trackIndex ? ` for track ${trackIndex}` : ""}. Search cleared and focus returned to the Tracks area. Verify the sound with gb_play_note.`,
+        );
       }),
   );
 
