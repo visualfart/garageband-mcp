@@ -1,0 +1,44 @@
+{
+  "name": "garageband-mcp",
+  "version": "0.1.0",
+  "description": "MCP server that controls GarageBand on macOS — compose and record music via virtual MIDI, drive transport, manage projects, and export songs",
+  "type": "module",
+  "bin": {
+    "garageband-mcp": "dist/index.js"
+  },
+  "files": [
+    "dist"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "os": [
+    "darwin"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "typecheck": "tsc --noEmit",
+    "dev": "tsup --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "keywords": [
+    "mcp",
+    "model-context-protocol",
+    "garageband",
+    "midi",
+    "music",
+    "macos",
+    "claude"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.30.0",
+    "easymidi": "^3.2.0",
+    "zod": "^3.25.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.6.0"
+  }
+}
