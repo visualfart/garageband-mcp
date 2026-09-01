@@ -30,6 +30,16 @@ export function noteOff(note: number, channel: number): void {
   sounding.delete(`${note}:${channel}`);
 }
 
+export function sendCC(controller: number, value: number, channel: number): void {
+  getOutput().send("cc", { controller, value, channel });
+}
+
+/** value is normalized -1..1; MIDI pitch is 0..16383 with 8192 center. */
+export function sendPitchBend(value: number, channel: number): void {
+  const raw = Math.max(0, Math.min(16383, Math.round((value + 1) * 8191.5)));
+  getOutput().send("pitch", { value: raw, channel });
+}
+
 /** Silence everything: explicit note-offs for held notes, then CC123 on all channels. */
 export function panic(): void {
   if (!output) return;
@@ -39,7 +49,9 @@ export function panic(): void {
   }
   sounding.clear();
   for (let ch = 0; ch < 16; ch++) {
-    output.send("cc", { controller: 123, value: 0, channel: ch });
+    output.send("cc", { controller: 123, value: 0, channel: ch }); // all notes off
+    output.send("cc", { controller: 64, value: 0, channel: ch }); // sustain off
+    output.send("pitch", { value: 8192, channel: ch }); // bend center
   }
 }
 

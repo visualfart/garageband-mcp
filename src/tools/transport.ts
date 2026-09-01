@@ -67,6 +67,20 @@ export function registerTransportTools(server: McpServer): void {
       act: () => ui.keystroke("k", ["shift"]),
       done: "Count-in toggled.",
     },
+    {
+      name: "gb_undo",
+      title: "Undo",
+      description: "Undo the last GarageBand action (Cmd+Z) — a bad take, a wrong loop drop, a deleted track.",
+      act: () => ui.keystroke("z", ["command"]),
+      done: "Undo sent.",
+    },
+    {
+      name: "gb_redo",
+      title: "Redo",
+      description: "Redo the last undone GarageBand action (Cmd+Shift+Z).",
+      act: () => ui.keystroke("z", ["command", "shift"]),
+      done: "Redo sent.",
+    },
   ];
 
   for (const t of simple) {

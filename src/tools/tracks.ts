@@ -2,63 +2,8 @@ import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
 import { ok, guarded, GBError } from "../errors.js";
 import * as ui from "../ui.js";
-import { sleep, runJXA } from "../osa.js";
-
-interface AxHit {
-  role: string;
-  text: string;
-  pos: [number, number] | null;
-  size: [number, number] | null;
-}
-
-/**
- * BFS a top-level window group (description "Tracks" / "Library") collecting
- * elements matched by the given predicates, expressed as JXA source snippets.
- */
-function groupScanScript(groupDesc: string, matchExpr: string, cap: number): string {
-  return `
-    const se = Application('System Events');
-    const p = se.processes['GarageBand'];
-    const w = p.windows[0];
-    let root = null;
-    try {
-      const g = w.uiElements.whose({description: ${JSON.stringify(groupDesc)}});
-      if (g.length > 0) root = g[0];
-    } catch (e) {}
-    if (root === null) {
-      'NOGROUP';
-    } else {
-      const found = [];
-      const queue = [root];
-      let visited = 0;
-      while (queue.length > 0 && visited < 600 && found.length < ${cap}) {
-        const el = queue.shift();
-        visited++;
-        let role = '', desc = '', value = '';
-        try { role = String(el.role() || ''); } catch (e) {}
-        try { desc = String(el.description() || ''); } catch (e) {}
-        try { const v = el.value(); if (v !== null && v !== undefined) value = String(v); } catch (e) {}
-        if (${matchExpr}) {
-          let pos = null, size = null;
-          try { pos = el.position(); } catch (e) {}
-          try { size = el.size(); } catch (e) {}
-          found.push({ role: role, text: value || desc, pos: pos, size: size });
-        }
-        try {
-          const kids = el.uiElements();
-          for (let i = 0; i < kids.length; i++) queue.push(kids[i]);
-        } catch (e) {}
-      }
-      JSON.stringify(found);
-    }
-  `;
-}
-
-async function scanGroup(groupDesc: string, matchExpr: string, cap = 40): Promise<AxHit[] | null> {
-  const out = await runJXA(groupScanScript(groupDesc, matchExpr, cap), 45_000);
-  if (out === "NOGROUP") return null;
-  return JSON.parse(out) as AxHit[];
-}
+import { sleep } from "../osa.js";
+import { scanGroup, type AxHit } from "../ax.js";
 
 /** Track headers in the Tracks area, sorted top-to-bottom. */
 async function listTrackHeaders(): Promise<AxHit[]> {
@@ -107,6 +52,54 @@ export function registerTrackTools(server: McpServer): void {
         }
         return ok(
           "Software-instrument track added and selected. It is the MIDI recording target; pick its sound in GarageBand's library, or just play into it with gb_play_note / gb_record_sequence.",
+        );
+      }),
+  );
+
+  server.registerTool(
+    "gb_add_track",
+    {
+      title: "Add track (typed)",
+      description:
+        "Add a track of a specific type via the New Track dialog: 'software' (MIDI instrument — what this server records onto), 'drummer' (GarageBand's AI session drummer that plays by itself), or 'audio' (for recording audio input). For plain software-instrument tracks gb_add_software_instrument_track is faster.",
+      inputSchema: {
+        type: z.enum(["software", "drummer", "audio"]),
+      },
+    },
+    async ({ type }) =>
+      guarded(async () => {
+        await ui.ensureReady({ needsProject: true });
+        await ui.keystroke("n", ["command", "option"]);
+        await sleep(1500);
+        const sheet = await ui.frontSheet();
+        if (!sheet.present) {
+          throw new GBError("DIALOG_UNEXPECTED", "The New Track dialog did not appear (Cmd+Opt+N).");
+        }
+        if (type !== "software") {
+          const patterns: Record<string, RegExp> = {
+            drummer: /drummer/i,
+            audio: /audio|microphone|voice/i,
+          };
+          const radio = sheet.radioButtons.find((r) => patterns[type].test(r));
+          if (!radio) {
+            await ui.keyCode(ui.KEY.ESCAPE);
+            throw new GBError(
+              "DIALOG_UNEXPECTED",
+              `No "${type}" option found in the New Track dialog. Options seen: ${sheet.radioButtons.join(", ") || "(none exposed)"}`,
+            );
+          }
+          await ui.clickSheetRadio(radio);
+          await sleep(400);
+        }
+        await ui.keyCode(ui.KEY.RETURN); // Create
+        await sleep(1500);
+        return ok(
+          `Added a ${type} track (selected).` +
+            (type === "drummer"
+              ? " The Drummer plays automatically — adjust its style in GarageBand's Drummer editor."
+              : type === "software"
+                ? " Set its sound with gb_set_track_instrument before recording."
+                : ""),
         );
       }),
   );

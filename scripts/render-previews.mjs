@@ -146,6 +146,7 @@ function renderFile(file) {
 
   for (const p of parts) {
     for (const e of p.events) {
+      if (e.cc || e.bend) continue; // expression gestures aren't rendered in previews
       const notes = e.notes ?? [e.note];
       const amp = Math.pow((e.velocity ?? 100) / 127, 1.5);
       const t0 = clock(e.startBeat) / 1000;

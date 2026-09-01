@@ -253,6 +253,33 @@ export async function clickAt(x: number, y: number): Promise<void> {
   await runJXA(script);
 }
 
+/** Drag from one screen point to another via CGEvents (for Apple Loops → timeline). */
+export async function dragFromTo(x1: number, y1: number, x2: number, y2: number): Promise<void> {
+  const steps = 14;
+  const moves = Array.from({ length: steps }, (_, i) => {
+    const t = (i + 1) / steps;
+    return `
+      const m${i} = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseDragged,
+        { x: ${x1} + ${(x2 - x1).toFixed(2)} * ${t.toFixed(3)}, y: ${y1} + ${(y2 - y1).toFixed(2)} * ${t.toFixed(3)} },
+        $.kCGMouseButtonLeft);
+      $.CGEventPost($.kCGHIDEventTap, m${i});
+      delay(0.03);
+    `;
+  }).join("");
+  const script = `
+    ObjC.import('CoreGraphics');
+    const down = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseDown, { x: ${x1}, y: ${y1} }, $.kCGMouseButtonLeft);
+    $.CGEventPost($.kCGHIDEventTap, down);
+    delay(0.25);
+    ${moves}
+    delay(0.15);
+    const up = $.CGEventCreateMouseEvent($(), $.kCGEventLeftMouseUp, { x: ${x2}, y: ${y2} }, $.kCGMouseButtonLeft);
+    $.CGEventPost($.kCGHIDEventTap, up);
+    'OK';
+  `;
+  await runJXA(script, 30_000);
+}
+
 export interface WindowBounds {
   x: number;
   y: number;

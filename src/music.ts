@@ -47,22 +47,42 @@ export const sequenceEvent = z
   .object({
     note: noteValue.optional().describe('Single note: "C4", "kick", or MIDI number'),
     notes: z.array(noteValue).optional().describe("Multiple simultaneous notes (a chord)"),
+    cc: z
+      .object({
+        controller: z.number().int().min(0).max(127).describe("1=mod wheel, 64=sustain, 74=filter cutoff (patch-dependent)"),
+        value: z.number().int().min(0).max(127),
+        endValue: z
+          .number()
+          .int()
+          .min(0)
+          .max(127)
+          .optional()
+          .describe("Ramp linearly to this value across durationBeats (filter sweeps, swells)"),
+      })
+      .optional()
+      .describe("Control-change event/ramp instead of a note"),
+    bend: z
+      .object({
+        value: z.number().min(-1).max(1).describe("-1 = full down, 0 = center, 1 = full up"),
+        endValue: z.number().min(-1).max(1).optional().describe("Ramp to this across durationBeats"),
+      })
+      .optional()
+      .describe("Pitch-bend event/ramp instead of a note (bend range is set by the patch, usually ±2 semitones)"),
     startBeat: z.number().min(0).describe("Start position in beats from 0"),
     durationBeats: z.number().positive().describe("Length in beats"),
     velocity: z.number().int().min(1).max(127).optional().describe("1-127, default 100"),
     channel: z.number().int().min(1).max(16).optional().describe("MIDI channel 1-16, default 1"),
   })
-  .describe("One note or chord placed on the beat grid");
+  .describe("One note/chord, or a CC / pitch-bend gesture, placed on the beat grid");
 
 export type SequenceEvent = z.infer<typeof sequenceEvent>;
 
-export interface MidiEvent {
-  tMs: number;
-  type: "on" | "off";
-  note: number;
-  velocity: number;
-  channel: number; // 0-based
-}
+export type MidiEvent =
+  | { tMs: number; type: "on" | "off"; note: number; velocity: number; channel: number }
+  | { tMs: number; type: "cc"; controller: number; value: number; channel: number }
+  | { tMs: number; type: "bend"; value: number; channel: number }; // value normalized -1..1
+
+const RAMP_STEP_MS = 20;
 
 export function msPerBeat(bpm: number): number {
   return 60_000 / bpm;
@@ -140,19 +160,46 @@ export function compileSequence(
   const clock = makeBeatClock(bpm, tempoMap);
   const out: MidiEvent[] = [];
   for (const ev of events) {
+    const channel = (ev.channel ?? 1) - 1;
+    const start = clock(ev.startBeat);
+    const end = clock(ev.startBeat + ev.durationBeats);
+
+    if (ev.cc) {
+      if (ev.cc.endValue !== undefined && ev.cc.endValue !== ev.cc.value) {
+        const steps = Math.max(2, Math.floor((end - start) / RAMP_STEP_MS));
+        for (let i = 0; i <= steps; i++) {
+          const value = Math.round(ev.cc.value + ((ev.cc.endValue - ev.cc.value) * i) / steps);
+          out.push({ tMs: start + ((end - start) * i) / steps, type: "cc", controller: ev.cc.controller, value, channel });
+        }
+      } else {
+        out.push({ tMs: start, type: "cc", controller: ev.cc.controller, value: ev.cc.value, channel });
+      }
+      continue;
+    }
+    if (ev.bend) {
+      if (ev.bend.endValue !== undefined && ev.bend.endValue !== ev.bend.value) {
+        const steps = Math.max(2, Math.floor((end - start) / RAMP_STEP_MS));
+        for (let i = 0; i <= steps; i++) {
+          const value = ev.bend.value + ((ev.bend.endValue - ev.bend.value) * i) / steps;
+          out.push({ tMs: start + ((end - start) * i) / steps, type: "bend", value, channel });
+        }
+      } else {
+        out.push({ tMs: start, type: "bend", value: ev.bend.value, channel });
+      }
+      continue;
+    }
+
     const rawNotes = ev.notes ?? (ev.note !== undefined ? [ev.note] : []);
     if (rawNotes.length === 0) {
-      throw new GBError("INVALID_INPUT", "Each event needs a `note` or a `notes` array.");
+      throw new GBError("INVALID_INPUT", "Each event needs a `note`/`notes`, a `cc`, or a `bend`.");
     }
     const velocity = ev.velocity ?? 100;
-    const channel = (ev.channel ?? 1) - 1;
     for (const n of rawNotes) {
       const note = parseNote(n);
-      const start = clock(ev.startBeat);
       // note-off lands 5ms early so repeated notes never collide on the same tick
-      const end = Math.max(start + 10, clock(ev.startBeat + ev.durationBeats) - 5);
+      const offAt = Math.max(start + 10, end - 5);
       out.push({ tMs: start, type: "on", note, velocity, channel });
-      out.push({ tMs: end, type: "off", note, velocity: 0, channel });
+      out.push({ tMs: offAt, type: "off", note, velocity: 0, channel });
     }
   }
   out.sort((a, b) => a.tMs - b.tMs || (a.type === "off" ? -1 : 1));

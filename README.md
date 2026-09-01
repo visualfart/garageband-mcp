@@ -20,17 +20,23 @@ Ready-made music lives in [`examples/`](examples/) — from a simple melody to f
 node examples/play.mjs examples/edm-anthem.json
 ```
 
-## Tools (33)
+## Tools (46)
 
 | Domain | Tools |
 |---|---|
-| Compose 🎹 | `gb_play_note`, `gb_play_chord`, `gb_play_sequence` (live audition), `gb_play_song` (multi-layer arrangements), `gb_record_sequence` (records into the project), `gb_all_notes_off` |
+| Compose 🎹 | `gb_play_note`, `gb_play_chord`, `gb_play_sequence` (live audition), `gb_play_song` (multi-layer arrangements), `gb_record_sequence` (records into the project), `gb_send_cc`, `gb_pitch_bend`, `gb_all_notes_off` |
 | Project | `gb_launch`, `gb_new_project`, `gb_open_project`, `gb_save_project`, `gb_close_project`, `gb_list_projects` |
-| Transport | `gb_play`, `gb_stop`, `gb_record`, `gb_go_to_beginning` (verified rewind), `gb_set_playhead`, `gb_toggle_cycle`, `gb_toggle_metronome`, `gb_toggle_count_in` |
-| Tracks | `gb_add_software_instrument_track`, `gb_set_track_instrument` (Library patch search), `gb_list_tracks`, `gb_select_track` (clicks track headers), `gb_delete_selected_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
+| Transport | `gb_play`, `gb_stop`, `gb_record`, `gb_go_to_beginning` (verified rewind), `gb_set_playhead`, `gb_toggle_cycle`, `gb_toggle_metronome`, `gb_toggle_count_in`, `gb_undo`, `gb_redo` |
+| Tracks | `gb_add_software_instrument_track`, `gb_add_track` (software/drummer/audio), `gb_set_track_instrument` (Library patch search), `gb_list_tracks`, `gb_select_track` (clicks track headers), `gb_delete_selected_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
+| Sound & Mix 🎛 | `gb_toggle_smart_controls`, `gb_list_smart_controls`, `gb_set_smart_control` (filter cutoff, resonance, attack…), `gb_set_track_volume`, `gb_set_track_pan`, `gb_set_master_volume` |
+| Apple Loops | `gb_search_loops`, `gb_add_loop` (drag into the timeline) |
 | Tempo | `gb_get_tempo`, `gb_set_tempo` |
 | Export | `gb_export_song` (AAC / MP3 / AIFF) |
 | Inspect | `gb_check_permissions`, `gb_ui_state`, `gb_screenshot` |
+
+Sequences also carry **expression**: CC events with linear ramps (mod-wheel filter sweeps across a build) and pitch-bend curves, alongside notes on the same beat grid.
+
+**If you are an AI agent — or building one — read [AGENTS.md](AGENTS.md) first.** It's the playbook: the three control planes and their failure modes, the golden-path workflow for multi-instrument songs, composing/mixing craft (velocity shaping, structure, sound design with Smart Controls), and error recovery for every error code.
 
 Notes are written as names (`"C4"`, `"F#3"`), drum aliases (`"kick"`, `"snare"`, `"hihat"`, …), or raw MIDI numbers. Sequences are placed on a beat grid (`startBeat` + `durationBeats`) and converted to real time by tempo. Songs go further: named **layers** (drums, bass, strings, lead, FX) on separate MIDI channels, and a **tempo map** with instant changes or linear ramps — enough to express builds, drops, risers, falls, crescendos, accelerando and ritardando. The [examples](examples/) show all of it, **with MP3 previews you can listen to**: an [EDM anthem](examples/audio/edm-anthem.mp3) with a build, drop, and ritardando outro, and a [cinematic strings piece](examples/audio/cinematic-swell.mp3) with swells and tempo ramps.
 

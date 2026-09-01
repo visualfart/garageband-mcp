@@ -1,5 +1,5 @@
 import type { MidiEvent } from "./music.js";
-import { noteOn, noteOff, panic } from "./midi.js";
+import { noteOn, noteOff, sendCC, sendPitchBend, panic } from "./midi.js";
 
 const TICK_MS = 25;
 const LOOKAHEAD_MS = 5;
@@ -23,7 +23,9 @@ export function playCompiled(events: MidiEvent[]): Promise<void> {
       const elapsed = Number(process.hrtime.bigint() - t0) / 1e6;
       while (idx < events.length && events[idx].tMs <= elapsed + LOOKAHEAD_MS) {
         const ev = events[idx++];
-        if (ev.type === "on") noteOn(ev.note, ev.velocity, ev.channel);
+        if (ev.type === "cc") sendCC(ev.controller, ev.value, ev.channel);
+        else if (ev.type === "bend") sendPitchBend(ev.value, ev.channel);
+        else if (ev.type === "on") noteOn(ev.note, ev.velocity, ev.channel);
         else noteOff(ev.note, ev.channel);
       }
       if (idx >= events.length) {

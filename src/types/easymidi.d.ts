@@ -3,6 +3,7 @@ declare module "easymidi" {
     constructor(name: string, virtual?: boolean);
     send(type: "noteon" | "noteoff", args: { note: number; velocity: number; channel: number }): void;
     send(type: "cc", args: { controller: number; value: number; channel: number }): void;
+    send(type: "pitch", args: { value: number; channel: number }): void;
     close(): void;
   }
   export class Input {

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ok, guarded, GBError } from "../errors.js";
 import * as ui from "../ui.js";
 import { sleep } from "../osa.js";
-import { noteOn, noteOff, panic } from "../midi.js";
+import { noteOn, noteOff, sendCC, sendPitchBend, panic } from "../midi.js";
 import {
   parseNote,
   noteValue,
@@ -204,6 +204,43 @@ export function registerComposeTools(server: McpServer): void {
           }
           throw e;
         }
+      }),
+  );
+
+  server.registerTool(
+    "gb_send_cc",
+    {
+      title: "Send MIDI CC",
+      description:
+        "Send a control-change message to the selected track's instrument: 1 = mod wheel (vibrato/filter on many patches), 64 = sustain pedal (127 on / 0 off), 74 = filter cutoff on some synths. For CC ramps over time, use cc events inside gb_play_sequence / gb_record_sequence instead.",
+      inputSchema: {
+        controller: z.number().int().min(0).max(127),
+        value: z.number().int().min(0).max(127),
+        channel: z.number().int().min(1).max(16).optional(),
+      },
+    },
+    async ({ controller, value, channel }) =>
+      guarded(async () => {
+        sendCC(controller, value, (channel ?? 1) - 1);
+        return ok(`Sent CC${controller} = ${value}.`);
+      }),
+  );
+
+  server.registerTool(
+    "gb_pitch_bend",
+    {
+      title: "Pitch bend",
+      description:
+        "Set the pitch-bend wheel: -1 = full down, 0 = center, 1 = full up (range is patch-defined, usually ±2 semitones). Remember to return it to 0. For bend curves over time, use bend events inside sequences.",
+      inputSchema: {
+        value: z.number().min(-1).max(1),
+        channel: z.number().int().min(1).max(16).optional(),
+      },
+    },
+    async ({ value, channel }) =>
+      guarded(async () => {
+        sendPitchBend(value, (channel ?? 1) - 1);
+        return ok(`Pitch bend at ${value}.`);
       }),
   );
 
