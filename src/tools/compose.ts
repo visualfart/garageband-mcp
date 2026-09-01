@@ -1,6 +1,6 @@
 import type { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { z } from "zod";
-import { ok, guarded } from "../errors.js";
+import { ok, guarded, GBError } from "../errors.js";
 import * as ui from "../ui.js";
 import { sleep } from "../osa.js";
 import { noteOn, noteOff, panic } from "../midi.js";
@@ -18,6 +18,7 @@ import {
   type TempoPoint,
 } from "../music.js";
 import { playCompiled, cancelActive } from "../scheduler.js";
+import { rewindVerified } from "./transport.js";
 
 const NOTE_TAIL_MS = 400; // let releases ring before we stop the transport
 
@@ -173,8 +174,16 @@ export function registerComposeTools(server: McpServer): void {
         const beatMs = msPerBeat(bpm);
         try {
           await ui.ensureReady({ needsProject: true });
-          await ui.keyCode(ui.KEY.RETURN); // playhead to beginning
-          await sleep(300);
+          // rewind and VERIFY via the LCD position readout — an unverified
+          // rewind silently shifts each layer further right on the timeline
+          const pos = await rewindVerified();
+          if (pos !== null && pos > 1.01) {
+            throw new GBError(
+              "ELEMENT_NOT_FOUND",
+              `Playhead still reads position ${pos} after rewinding — recording would land at the wrong bar.`,
+              "Check gb_ui_state / gb_screenshot for a dialog or focused field swallowing keystrokes, then retry.",
+            );
+          }
           await ui.keystroke("r"); // start recording
           const waitMs = bars * bpb * beatMs + (startLatencyMs ?? 150);
           await sleep(waitMs);

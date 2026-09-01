@@ -20,13 +20,13 @@ Ready-made music lives in [`examples/`](examples/) — from a simple melody to f
 node examples/play.mjs examples/edm-anthem.json
 ```
 
-## Tools (30)
+## Tools (31)
 
 | Domain | Tools |
 |---|---|
 | Compose 🎹 | `gb_play_note`, `gb_play_chord`, `gb_play_sequence` (live audition), `gb_play_song` (multi-layer arrangements), `gb_record_sequence` (records into the project), `gb_all_notes_off` |
 | Project | `gb_launch`, `gb_new_project`, `gb_open_project`, `gb_save_project`, `gb_close_project`, `gb_list_projects` |
-| Transport | `gb_play`, `gb_stop`, `gb_record`, `gb_go_to_beginning`, `gb_toggle_cycle`, `gb_toggle_metronome`, `gb_toggle_count_in` |
+| Transport | `gb_play`, `gb_stop`, `gb_record`, `gb_go_to_beginning` (verified rewind), `gb_set_playhead`, `gb_toggle_cycle`, `gb_toggle_metronome`, `gb_toggle_count_in` |
 | Tracks | `gb_add_software_instrument_track`, `gb_delete_selected_track`, `gb_select_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
 | Tempo | `gb_get_tempo`, `gb_set_tempo` |
 | Export | `gb_export_song` (AAC / MP3 / AIFF) |
