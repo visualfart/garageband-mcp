@@ -1,0 +1,20 @@
+{
+  "name": "Funk bassline",
+  "description": "Syncopated two-bar C-minor bassline. Try it on a fingerstyle or synth bass patch.",
+  "tempo": 104,
+  "events": [
+    { "note": "C2", "startBeat": 0, "durationBeats": 0.6, "velocity": 112 },
+    { "note": "C2", "startBeat": 0.75, "durationBeats": 0.2, "velocity": 80 },
+    { "note": "Eb2", "startBeat": 1.5, "durationBeats": 0.4, "velocity": 96 },
+    { "note": "G2", "startBeat": 2, "durationBeats": 0.4, "velocity": 100 },
+    { "note": "Bb2", "startBeat": 2.5, "durationBeats": 0.4, "velocity": 92 },
+    { "note": "C3", "startBeat": 3, "durationBeats": 0.5, "velocity": 108 },
+    { "note": "Bb2", "startBeat": 3.75, "durationBeats": 0.2, "velocity": 76 },
+    { "note": "Ab2", "startBeat": 4, "durationBeats": 0.6, "velocity": 108 },
+    { "note": "Ab2", "startBeat": 4.75, "durationBeats": 0.2, "velocity": 80 },
+    { "note": "G2", "startBeat": 5.5, "durationBeats": 0.4, "velocity": 96 },
+    { "note": "F2", "startBeat": 6, "durationBeats": 0.4, "velocity": 100 },
+    { "note": "Eb2", "startBeat": 6.5, "durationBeats": 0.4, "velocity": 92 },
+    { "note": "C2", "startBeat": 7, "durationBeats": 0.9, "velocity": 112 }
+  ]
+}

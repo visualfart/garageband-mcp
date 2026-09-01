@@ -1,6 +1,6 @@
 # GarageBand MCP
 
-An [MCP](https://modelcontextprotocol.io) server that lets Claude (or any MCP client) control **GarageBand on macOS** — compose and record music, drive the transport, manage projects, and export songs.
+An [MCP](https://modelcontextprotocol.io) server that lets AI agents control **GarageBand on macOS** — compose and record music, drive the transport, manage projects, and export songs. Works with any MCP client: Claude Code, Claude Desktop, Cursor, Cline, Zed, Windsurf, or your own agent.
 
 GarageBand has no scripting API, so this server combines three techniques:
 
@@ -12,7 +12,13 @@ GarageBand has no scripting API, so this server combines three techniques:
 
 > "Create a new GarageBand project at 90 BPM and record a four-bar lo-fi chord progression, then a drum groove on a second track, and export it as an MP3."
 
-Claude does this with `gb_new_project` → `gb_set_tempo` → `gb_record_sequence` → `gb_add_software_instrument_track` → `gb_record_sequence` → `gb_export_song`.
+The agent does this with `gb_new_project` → `gb_set_tempo` → `gb_record_sequence` → `gb_add_software_instrument_track` → `gb_record_sequence` → `gb_export_song`.
+
+Ready-made sequences to try (melody, lo-fi chords, funk bassline, drum groove) live in [`examples/`](examples/) — including a standalone player so you can hear it working without any MCP client:
+
+```bash
+node examples/play.mjs examples/lofi-chords.json
+```
 
 ## Tools (29)
 
@@ -54,13 +60,32 @@ claude mcp add garageband -- npx -y garageband-mcp
 }
 ```
 
+**Cursor** — add to `~/.cursor/mcp.json` (or a project's `.cursor/mcp.json`):
+
+```json
+{
+  "mcpServers": {
+    "garageband": {
+      "command": "npx",
+      "args": ["-y", "garageband-mcp"]
+    }
+  }
+}
+```
+
+**Any other MCP client** (Cline, Zed, Windsurf, custom agents) — it's a standard stdio server; point your client at:
+
+```
+npx -y garageband-mcp
+```
+
 **From source:**
 
 ```bash
 git clone https://github.com/visualfart/garageband-mcp.git
 cd garageband-mcp
 npm install && npm run build
-claude mcp add garageband -- node "$(pwd)/dist/index.js"
+# then use `node /path/to/garageband-mcp/dist/index.js` as the server command
 ```
 
 ## macOS permissions

@@ -1,0 +1,21 @@
+{
+  "name": "Twinkle Twinkle",
+  "description": "Simple melody — a good first test that MIDI reaches your software-instrument track.",
+  "tempo": 120,
+  "events": [
+    { "note": "C4", "startBeat": 0, "durationBeats": 1 },
+    { "note": "C4", "startBeat": 1, "durationBeats": 1 },
+    { "note": "G4", "startBeat": 2, "durationBeats": 1 },
+    { "note": "G4", "startBeat": 3, "durationBeats": 1 },
+    { "note": "A4", "startBeat": 4, "durationBeats": 1 },
+    { "note": "A4", "startBeat": 5, "durationBeats": 1 },
+    { "note": "G4", "startBeat": 6, "durationBeats": 2 },
+    { "note": "F4", "startBeat": 8, "durationBeats": 1 },
+    { "note": "F4", "startBeat": 9, "durationBeats": 1 },
+    { "note": "E4", "startBeat": 10, "durationBeats": 1 },
+    { "note": "E4", "startBeat": 11, "durationBeats": 1 },
+    { "note": "D4", "startBeat": 12, "durationBeats": 1 },
+    { "note": "D4", "startBeat": 13, "durationBeats": 1 },
+    { "note": "C4", "startBeat": 14, "durationBeats": 2 }
+  ]
+}

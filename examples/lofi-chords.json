@@ -1,0 +1,14 @@
+{
+  "name": "Lo-fi chord progression",
+  "description": "Fmaj7 – Em7 – Dm7 – Cmaj7 at a relaxed 72 BPM. Sounds great on an electric piano patch.",
+  "tempo": 72,
+  "events": [
+    { "notes": ["F3", "A3", "C4", "E4"], "startBeat": 0, "durationBeats": 3.8, "velocity": 72 },
+    { "note": "A4", "startBeat": 3, "durationBeats": 0.8, "velocity": 60 },
+    { "notes": ["E3", "G3", "B3", "D4"], "startBeat": 4, "durationBeats": 3.8, "velocity": 68 },
+    { "note": "G4", "startBeat": 7, "durationBeats": 0.8, "velocity": 58 },
+    { "notes": ["D3", "F3", "A3", "C4"], "startBeat": 8, "durationBeats": 3.8, "velocity": 72 },
+    { "note": "E4", "startBeat": 11, "durationBeats": 0.8, "velocity": 60 },
+    { "notes": ["C3", "E3", "G3", "B3"], "startBeat": 12, "durationBeats": 4, "velocity": 66 }
+  ]
+}

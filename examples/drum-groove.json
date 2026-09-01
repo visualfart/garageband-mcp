@@ -1,0 +1,31 @@
+{
+  "name": "Boom-bap drum groove",
+  "description": "Two-bar hip-hop groove using drum aliases. Select a Drum Kit software-instrument track first.",
+  "tempo": 90,
+  "events": [
+    { "note": "kick", "startBeat": 0, "durationBeats": 0.5, "velocity": 110 },
+    { "note": "hihat", "startBeat": 0, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "hihat", "startBeat": 0.5, "durationBeats": 0.4, "velocity": 50 },
+    { "note": "snare", "startBeat": 1, "durationBeats": 0.5, "velocity": 100 },
+    { "note": "hihat", "startBeat": 1, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "hihat", "startBeat": 1.5, "durationBeats": 0.4, "velocity": 50 },
+    { "note": "hihat", "startBeat": 2, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "kick", "startBeat": 2.5, "durationBeats": 0.5, "velocity": 105 },
+    { "note": "hihat", "startBeat": 2.5, "durationBeats": 0.4, "velocity": 50 },
+    { "note": "snare", "startBeat": 3, "durationBeats": 0.5, "velocity": 100 },
+    { "note": "hihat", "startBeat": 3, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "openhat", "startBeat": 3.5, "durationBeats": 0.5, "velocity": 65 },
+    { "note": "kick", "startBeat": 4, "durationBeats": 0.5, "velocity": 110 },
+    { "note": "hihat", "startBeat": 4, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "hihat", "startBeat": 4.5, "durationBeats": 0.4, "velocity": 50 },
+    { "note": "snare", "startBeat": 5, "durationBeats": 0.5, "velocity": 100 },
+    { "note": "hihat", "startBeat": 5, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "hihat", "startBeat": 5.5, "durationBeats": 0.4, "velocity": 50 },
+    { "note": "kick", "startBeat": 6, "durationBeats": 0.5, "velocity": 105 },
+    { "note": "hihat", "startBeat": 6, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "kick", "startBeat": 6.75, "durationBeats": 0.25, "velocity": 95 },
+    { "note": "snare", "startBeat": 7, "durationBeats": 0.5, "velocity": 100 },
+    { "note": "hihat", "startBeat": 7, "durationBeats": 0.4, "velocity": 70 },
+    { "note": "snare", "startBeat": 7.75, "durationBeats": 0.25, "velocity": 60 }
+  ]
+}
