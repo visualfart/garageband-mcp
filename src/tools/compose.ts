@@ -8,17 +8,25 @@ import {
   parseNote,
   noteValue,
   sequenceEvent,
+  tempoPoint,
+  songLayer,
+  mergeLayers,
   compileSequence,
   sequenceLengthBeats,
   msPerBeat,
   type SequenceEvent,
+  type TempoPoint,
 } from "../music.js";
 import { playCompiled, cancelActive } from "../scheduler.js";
 
 const NOTE_TAIL_MS = 400; // let releases ring before we stop the transport
 
-async function playEvents(events: SequenceEvent[], bpm: number): Promise<number> {
-  const compiled = compileSequence(events, bpm);
+async function playEvents(
+  events: SequenceEvent[],
+  bpm: number,
+  tempoMap: TempoPoint[] = [],
+): Promise<number> {
+  const compiled = compileSequence(events, bpm, tempoMap);
   await playCompiled(compiled);
   return compiled.length / 2;
 }
@@ -79,15 +87,43 @@ export function registerComposeTools(server: McpServer): void {
         "Play a beat-grid sequence of notes/chords into GarageBand live (no recording). Events have startBeat + durationBeats; tempo converts beats to time.",
       inputSchema: {
         tempo: z.number().min(40).max(240).optional().describe("BPM, default 120"),
+        tempoMap: z
+          .array(tempoPoint)
+          .optional()
+          .describe("Tempo changes/ramps during the sequence (accelerando, ritardando)"),
         events: z.array(sequenceEvent).min(1),
       },
     },
-    async ({ tempo, events }) =>
+    async ({ tempo, tempoMap, events }) =>
       guarded(async () => {
         const bpm = tempo ?? 120;
-        const n = await playEvents(events, bpm);
+        const n = await playEvents(events, bpm, tempoMap ?? []);
         return ok(
-          `Played ${n} notes over ${sequenceLengthBeats(events).toFixed(2)} beats at ${bpm} BPM.`,
+          `Played ${n} notes over ${sequenceLengthBeats(events).toFixed(2)} beats at ${bpm} BPM${tempoMap?.length ? ` with ${tempoMap.length} tempo changes` : ""}.`,
+        );
+      }),
+  );
+
+  server.registerTool(
+    "gb_play_song",
+    {
+      title: "Play a multi-layer song",
+      description:
+        "Play a full arrangement — multiple named layers (drums, bass, strings, lead, FX) merged and streamed together, with optional tempo changes/ramps. NOTE: GarageBand routes all live MIDI to the one selected track, so this auditions the whole mix on a single instrument. For a real multi-instrument arrangement, record each layer onto its own track with gb_record_sequence (passing that layer's events), adding tracks in between.",
+      inputSchema: {
+        tempo: z.number().min(40).max(240).optional().describe("Base BPM, default 120"),
+        tempoMap: z.array(tempoPoint).optional(),
+        layers: z.array(songLayer).min(1),
+      },
+    },
+    async ({ tempo, tempoMap, layers }) =>
+      guarded(async () => {
+        const bpm = tempo ?? 120;
+        const merged = mergeLayers(layers);
+        const n = await playEvents(merged, bpm, tempoMap ?? []);
+        const names = layers.map((l, i) => l.name ?? `layer ${i + 1}`).join(", ");
+        return ok(
+          `Played ${n} notes across ${layers.length} layers (${names}) over ${sequenceLengthBeats(merged).toFixed(2)} beats at ${bpm} BPM${tempoMap?.length ? ` with ${tempoMap.length} tempo changes` : ""}.`,
         );
       }),
   );
@@ -105,6 +141,12 @@ export function registerComposeTools(server: McpServer): void {
           .max(240)
           .optional()
           .describe("Project BPM (must match GarageBand's tempo), default 120"),
+        tempoMap: z
+          .array(tempoPoint)
+          .optional()
+          .describe(
+            "Expressive tempo changes for the performance (the recorded notes keep their real timing; GarageBand's grid stays at the project tempo)",
+          ),
         events: z.array(sequenceEvent).min(1),
         countInBars: z
           .number()
@@ -123,7 +165,7 @@ export function registerComposeTools(server: McpServer): void {
           .describe("Extra delay after pressing record before streaming (tuning aid, default 150)"),
       },
     },
-    async ({ tempo, events, countInBars, beatsPerBar, startLatencyMs }) =>
+    async ({ tempo, tempoMap, events, countInBars, beatsPerBar, startLatencyMs }) =>
       guarded(async () => {
         const bpm = tempo ?? 120;
         const bars = countInBars ?? 1;
@@ -136,7 +178,7 @@ export function registerComposeTools(server: McpServer): void {
           await ui.keystroke("r"); // start recording
           const waitMs = bars * bpb * beatMs + (startLatencyMs ?? 150);
           await sleep(waitMs);
-          const n = await playEvents(events, bpm);
+          const n = await playEvents(events, bpm, tempoMap ?? []);
           await sleep(NOTE_TAIL_MS);
           await ui.keyCode(ui.KEY.SPACE); // stop
           return ok(

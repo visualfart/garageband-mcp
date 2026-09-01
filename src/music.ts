@@ -68,9 +68,76 @@ export function msPerBeat(bpm: number): number {
   return 60_000 / bpm;
 }
 
+export const tempoPoint = z
+  .object({
+    beat: z.number().min(0).describe("Beat at which this tempo applies"),
+    bpm: z.number().min(20).max(300),
+    ramp: z
+      .boolean()
+      .optional()
+      .describe(
+        "Glide linearly from the previous tempo, arriving at this bpm exactly on this beat (accelerando/ritardando). Without it the change is instant.",
+      ),
+  })
+  .describe(
+    'Tempo change. To ramp only near the end, pin the old tempo first: [{beat:32,bpm:128},{beat:40,bpm:92,"ramp":true}]',
+  );
+
+export type TempoPoint = z.infer<typeof tempoPoint>;
+
+interface TempoSegment {
+  s: number; // start beat
+  e: number; // end beat
+  a: number; // bpm at s
+  b: number; // bpm at e (== a for constant segments)
+  t0: number; // absolute ms at s
+}
+
+// time to traverse [s, x] of a segment whose bpm moves linearly a -> b over [s, e]
+function segmentMs(seg: TempoSegment, x: number): number {
+  const { s, e, a, b } = seg;
+  if (x <= s) return 0;
+  if (Math.abs(b - a) < 1e-9 || !isFinite(e)) return ((x - s) * 60_000) / a;
+  const k = (b - a) / (e - s);
+  const bpmX = a + k * (x - s);
+  return (60_000 / k) * Math.log(bpmX / a);
+}
+
+/**
+ * Build a beat→ms clock from a base tempo and an optional tempo map.
+ * Ramped points integrate 1/bpm in closed form, so ramps stay exact.
+ */
+export function makeBeatClock(baseBpm: number, map: TempoPoint[] = []): (beat: number) => number {
+  const pts = [...map].sort((x, y) => x.beat - y.beat);
+  const segs: TempoSegment[] = [];
+  let curBeat = 0;
+  let curBpm = baseBpm;
+  let t = 0;
+  for (const p of pts) {
+    if (p.beat > curBeat) {
+      const endBpm = p.ramp ? p.bpm : curBpm;
+      const seg: TempoSegment = { s: curBeat, e: p.beat, a: curBpm, b: endBpm, t0: t };
+      segs.push(seg);
+      t += segmentMs(seg, p.beat);
+      curBeat = p.beat;
+    }
+    curBpm = p.bpm;
+  }
+  segs.push({ s: curBeat, e: Infinity, a: curBpm, b: curBpm, t0: t });
+  return (beat: number) => {
+    const seg =
+      segs.find((sg) => beat >= sg.s && beat < sg.e) ?? segs[segs.length - 1];
+    return seg.t0 + segmentMs(seg, beat);
+  };
+}
+
 /** Compile beat-grid events into a sorted absolute-time MIDI event list. */
-export function compileSequence(events: SequenceEvent[], bpm: number): MidiEvent[] {
-  const beatMs = msPerBeat(bpm);
+export function compileSequence(
+  events: SequenceEvent[],
+  bpm: number,
+  tempoMap: TempoPoint[] = [],
+): MidiEvent[] {
+  const clock = makeBeatClock(bpm, tempoMap);
   const out: MidiEvent[] = [];
   for (const ev of events) {
     const rawNotes = ev.notes ?? (ev.note !== undefined ? [ev.note] : []);
@@ -81,15 +148,38 @@ export function compileSequence(events: SequenceEvent[], bpm: number): MidiEvent
     const channel = (ev.channel ?? 1) - 1;
     for (const n of rawNotes) {
       const note = parseNote(n);
-      const start = ev.startBeat * beatMs;
+      const start = clock(ev.startBeat);
       // note-off lands 5ms early so repeated notes never collide on the same tick
-      const end = start + Math.max(10, ev.durationBeats * beatMs - 5);
+      const end = Math.max(start + 10, clock(ev.startBeat + ev.durationBeats) - 5);
       out.push({ tMs: start, type: "on", note, velocity, channel });
       out.push({ tMs: end, type: "off", note, velocity: 0, channel });
     }
   }
   out.sort((a, b) => a.tMs - b.tMs || (a.type === "off" ? -1 : 1));
   return out;
+}
+
+export const songLayer = z
+  .object({
+    name: z.string().optional().describe('e.g. "drums", "bass", "strings"'),
+    channel: z
+      .number()
+      .int()
+      .min(1)
+      .max(16)
+      .optional()
+      .describe("Default MIDI channel for this layer's events"),
+    events: z.array(sequenceEvent).min(1),
+  })
+  .describe("One instrument part of a multi-layer song");
+
+export type SongLayer = z.infer<typeof songLayer>;
+
+/** Merge song layers (applying each layer's default channel) into one event list. */
+export function mergeLayers(layers: SongLayer[]): SequenceEvent[] {
+  return layers.flatMap((layer) =>
+    layer.events.map((ev) => ({ ...ev, channel: ev.channel ?? layer.channel ?? 1 })),
+  );
 }
 
 export function sequenceLengthBeats(events: SequenceEvent[]): number {

@@ -1,0 +1,433 @@
+{
+  "name": "Dawn Over Ice",
+  "description": "Cinematic strings piece: swelling low bows, a rising theme with accelerando, a timpani roll into the climax, then a falling resolution with ritardando. Four layers with expressive velocity and tempo ramps.",
+  "tempo": 70,
+  "tempoMap": [
+    {
+      "beat": 8,
+      "bpm": 70
+    },
+    {
+      "beat": 16,
+      "bpm": 84,
+      "ramp": true
+    },
+    {
+      "beat": 28,
+      "bpm": 84
+    },
+    {
+      "beat": 36,
+      "bpm": 58,
+      "ramp": true
+    }
+  ],
+  "layers": [
+    {
+      "name": "low strings",
+      "channel": 1,
+      "events": [
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 0,
+          "durationBeats": 1.9,
+          "velocity": 45
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 2,
+          "durationBeats": 1.9,
+          "velocity": 58
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 4,
+          "durationBeats": 1.9,
+          "velocity": 70
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 6,
+          "durationBeats": 1.9,
+          "velocity": 82
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 8,
+          "durationBeats": 1.9,
+          "velocity": 88
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 10,
+          "durationBeats": 1.9,
+          "velocity": 94
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 12,
+          "durationBeats": 1.9,
+          "velocity": 100
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 14,
+          "durationBeats": 1.9,
+          "velocity": 106
+        },
+        {
+          "notes": [
+            "C2",
+            "G2",
+            "C3"
+          ],
+          "startBeat": 16,
+          "durationBeats": 5.9,
+          "velocity": 115
+        },
+        {
+          "notes": [
+            "C2",
+            "G2",
+            "C3"
+          ],
+          "startBeat": 22,
+          "durationBeats": 5.9,
+          "velocity": 105
+        },
+        {
+          "notes": [
+            "F2",
+            "C3"
+          ],
+          "startBeat": 28,
+          "durationBeats": 3.9,
+          "velocity": 80
+        },
+        {
+          "notes": [
+            "C2",
+            "G2"
+          ],
+          "startBeat": 32,
+          "durationBeats": 4,
+          "velocity": 60
+        }
+      ]
+    },
+    {
+      "name": "high strings",
+      "channel": 2,
+      "events": [
+        {
+          "note": "E4",
+          "startBeat": 4,
+          "durationBeats": 1.9,
+          "velocity": 55
+        },
+        {
+          "note": "G4",
+          "startBeat": 6,
+          "durationBeats": 1.9,
+          "velocity": 62
+        },
+        {
+          "note": "A4",
+          "startBeat": 8,
+          "durationBeats": 1,
+          "velocity": 70
+        },
+        {
+          "note": "B4",
+          "startBeat": 9,
+          "durationBeats": 1,
+          "velocity": 74
+        },
+        {
+          "note": "C5",
+          "startBeat": 10,
+          "durationBeats": 2,
+          "velocity": 80
+        },
+        {
+          "note": "D5",
+          "startBeat": 12,
+          "durationBeats": 1,
+          "velocity": 88
+        },
+        {
+          "note": "E5",
+          "startBeat": 13,
+          "durationBeats": 1,
+          "velocity": 94
+        },
+        {
+          "note": "G5",
+          "startBeat": 14,
+          "durationBeats": 2,
+          "velocity": 102
+        },
+        {
+          "note": "E5",
+          "startBeat": 16,
+          "durationBeats": 2,
+          "velocity": 112
+        },
+        {
+          "note": "D5",
+          "startBeat": 18,
+          "durationBeats": 1,
+          "velocity": 105
+        },
+        {
+          "note": "C5",
+          "startBeat": 19,
+          "durationBeats": 1,
+          "velocity": 100
+        },
+        {
+          "note": "G4",
+          "startBeat": 20,
+          "durationBeats": 2,
+          "velocity": 95
+        },
+        {
+          "note": "A4",
+          "startBeat": 22,
+          "durationBeats": 2,
+          "velocity": 98
+        },
+        {
+          "note": "C5",
+          "startBeat": 24,
+          "durationBeats": 2,
+          "velocity": 104
+        },
+        {
+          "note": "B4",
+          "startBeat": 26,
+          "durationBeats": 2,
+          "velocity": 96
+        },
+        {
+          "note": "A4",
+          "startBeat": 28,
+          "durationBeats": 2,
+          "velocity": 84
+        },
+        {
+          "note": "G4",
+          "startBeat": 30,
+          "durationBeats": 2,
+          "velocity": 76
+        },
+        {
+          "note": "E4",
+          "startBeat": 32,
+          "durationBeats": 4,
+          "velocity": 60
+        }
+      ]
+    },
+    {
+      "name": "mid strings",
+      "channel": 3,
+      "events": [
+        {
+          "notes": [
+            "C4",
+            "E4"
+          ],
+          "startBeat": 8,
+          "durationBeats": 3.9,
+          "velocity": 65
+        },
+        {
+          "notes": [
+            "D4",
+            "F4"
+          ],
+          "startBeat": 12,
+          "durationBeats": 3.9,
+          "velocity": 75
+        },
+        {
+          "notes": [
+            "C4",
+            "E4",
+            "G4"
+          ],
+          "startBeat": 16,
+          "durationBeats": 3.9,
+          "velocity": 100
+        },
+        {
+          "notes": [
+            "G3",
+            "B3",
+            "D4"
+          ],
+          "startBeat": 20,
+          "durationBeats": 3.9,
+          "velocity": 95
+        },
+        {
+          "notes": [
+            "A3",
+            "C4",
+            "E4"
+          ],
+          "startBeat": 24,
+          "durationBeats": 3.9,
+          "velocity": 92
+        },
+        {
+          "notes": [
+            "F3",
+            "A3",
+            "C4"
+          ],
+          "startBeat": 28,
+          "durationBeats": 3.9,
+          "velocity": 75
+        },
+        {
+          "notes": [
+            "E3",
+            "G3",
+            "C4"
+          ],
+          "startBeat": 32,
+          "durationBeats": 4,
+          "velocity": 55
+        }
+      ]
+    },
+    {
+      "name": "percussion",
+      "channel": 10,
+      "events": [
+        {
+          "note": "tomlow",
+          "startBeat": 8,
+          "durationBeats": 0.5,
+          "velocity": 70
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 12,
+          "durationBeats": 0.5,
+          "velocity": 80
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 14,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 14.25,
+          "durationBeats": 0.2,
+          "velocity": 67
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 14.5,
+          "durationBeats": 0.2,
+          "velocity": 74
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 14.75,
+          "durationBeats": 0.2,
+          "velocity": 81
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 15,
+          "durationBeats": 0.2,
+          "velocity": 88
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 15.25,
+          "durationBeats": 0.2,
+          "velocity": 95
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 15.5,
+          "durationBeats": 0.2,
+          "velocity": 102
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 15.75,
+          "durationBeats": 0.2,
+          "velocity": 109
+        },
+        {
+          "note": "crash",
+          "startBeat": 16,
+          "durationBeats": 3,
+          "velocity": 115
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 16,
+          "durationBeats": 1,
+          "velocity": 120
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 20,
+          "durationBeats": 0.5,
+          "velocity": 85
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 24,
+          "durationBeats": 0.5,
+          "velocity": 85
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 28,
+          "durationBeats": 1,
+          "velocity": 90
+        },
+        {
+          "note": "crash",
+          "startBeat": 34,
+          "durationBeats": 2,
+          "velocity": 70
+        }
+      ]
+    }
+  ]
+}
