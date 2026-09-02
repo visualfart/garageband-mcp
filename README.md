@@ -20,7 +20,7 @@ Ready-made music lives in [`examples/`](examples/) — from a simple melody to f
 node examples/play.mjs examples/edm-anthem.json
 ```
 
-## Tools (46)
+## Tools (52)
 
 | Domain | Tools |
 |---|---|
@@ -30,6 +30,7 @@ node examples/play.mjs examples/edm-anthem.json
 | Tracks | `gb_add_software_instrument_track`, `gb_add_track` (software/drummer/audio), `gb_set_track_instrument` (Library patch search), `gb_list_tracks`, `gb_select_track` (clicks track headers), `gb_delete_selected_track`, `gb_mute_selected_track`, `gb_solo_selected_track` |
 | Sound & Mix 🎛 | `gb_toggle_smart_controls`, `gb_list_smart_controls`, `gb_set_smart_control` (filter cutoff, resonance, attack…), `gb_set_track_volume`, `gb_set_track_pan`, `gb_set_master_volume` |
 | Apple Loops | `gb_search_loops`, `gb_add_loop` (drag into the timeline) |
+| Open-source content 🌐 | `gb_import_midi` (built-in SMF parser → layers), `gb_play_imported`, `gb_record_imported`, `gb_imported_events`, `gb_search_freesound`, `gb_download_sample` |
 | Tempo | `gb_get_tempo`, `gb_set_tempo` |
 | Export | `gb_export_song` (AAC / MP3 / AIFF) |
 | Inspect | `gb_check_permissions`, `gb_ui_state`, `gb_screenshot` |
@@ -122,6 +123,27 @@ cd garageband-mcp
 npm install && npm run build
 # then use `node /path/to/garageband-mcp/dist/index.js` as the server command
 ```
+
+## Open-source MIDI & samples
+
+The server can pull open-licensed music from the internet:
+
+- **MIDI** — `gb_import_midi {url}` downloads a `.mid`, parses it with a built-in Standard MIDI File parser (notes, velocities, tempo changes, per-track layers), and holds it for auditioning (`gb_play_imported`) or recording into GarageBand layer by layer (`gb_record_imported`). Good sources: the [Mutopia Project](https://www.mutopiaproject.org) (public-domain scores), [piano-midi.de](http://www.piano-midi.de) (CC classical performances), Wikimedia Commons. **Stick to public-domain/CC sources** — most "free MIDI" sites host transcriptions of copyrighted songs.
+- **Audio samples** — `gb_search_freesound` / `gb_download_sample` use [Freesound.org](https://freesound.org)'s API (CC0 by default; CC-BY results report the required credit). Enable it with a free API key:
+
+```json
+{
+  "mcpServers": {
+    "garageband": {
+      "command": "npx",
+      "args": ["-y", "garageband-mcp"],
+      "env": { "FREESOUND_API_KEY": "your-key-from-freesound.org/apiv2/apply" }
+    }
+  }
+}
+```
+
+Downloaded samples land in `~/Music/GarageBand MCP Samples/`; GarageBand can't be scripted to import audio, so the last step is dragging the file from Finder into the tracks area.
 
 ## macOS permissions
 

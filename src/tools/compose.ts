@@ -22,7 +22,7 @@ import { rewindVerified } from "./transport.js";
 
 const NOTE_TAIL_MS = 400; // let releases ring before we stop the transport
 
-async function playEvents(
+export async function playEvents(
   events: SequenceEvent[],
   bpm: number,
   tempoMap: TempoPoint[] = [],
@@ -30,6 +30,54 @@ async function playEvents(
   const compiled = compileSequence(events, bpm, tempoMap);
   await playCompiled(compiled);
   return compiled.length / 2;
+}
+
+export interface RecordOpts {
+  tempo?: number;
+  tempoMap?: TempoPoint[];
+  countInBars?: number;
+  beatsPerBar?: number;
+  startLatencyMs?: number;
+}
+
+/** The full record flow: verified rewind → record → count-in → stream → stop. */
+export async function recordSequenceFlow(events: SequenceEvent[], opts: RecordOpts): Promise<string> {
+  const bpm = opts.tempo ?? 120;
+  const bars = opts.countInBars ?? 1;
+  const bpb = opts.beatsPerBar ?? 4;
+  const beatMs = msPerBeat(bpm);
+  try {
+    await ui.ensureReady({ needsProject: true });
+    // rewind and VERIFY via the LCD position readout — an unverified
+    // rewind silently shifts each layer further right on the timeline
+    const pos = await rewindVerified();
+    if (pos !== null && pos > 1.01) {
+      throw new GBError(
+        "ELEMENT_NOT_FOUND",
+        `Playhead still reads position ${pos} after rewinding — recording would land at the wrong bar.`,
+        "Check gb_ui_state / gb_screenshot for a dialog or focused field swallowing keystrokes, then retry.",
+      );
+    }
+    await ui.keystroke("r"); // start recording
+    const waitMs = bars * bpb * beatMs + (opts.startLatencyMs ?? 150);
+    await sleep(waitMs);
+    const n = await playEvents(events, bpm, opts.tempoMap ?? []);
+    await sleep(NOTE_TAIL_MS);
+    await ui.keyCode(ui.KEY.SPACE); // stop
+    return (
+      `Recorded ${n} notes (${sequenceLengthBeats(events).toFixed(2)} beats at ${bpm} BPM) onto the selected track. ` +
+      "Press gb_go_to_beginning + gb_play to hear it. If timing is off, adjust startLatencyMs or verify the project tempo and count-in setting match the parameters."
+    );
+  } catch (e) {
+    // never leave the transport recording or notes hanging on failure
+    panic();
+    try {
+      await ui.keyCode(ui.KEY.SPACE);
+    } catch {
+      /* best effort */
+    }
+    throw e;
+  }
 }
 
 export function registerComposeTools(server: McpServer): void {
@@ -167,44 +215,9 @@ export function registerComposeTools(server: McpServer): void {
       },
     },
     async ({ tempo, tempoMap, events, countInBars, beatsPerBar, startLatencyMs }) =>
-      guarded(async () => {
-        const bpm = tempo ?? 120;
-        const bars = countInBars ?? 1;
-        const bpb = beatsPerBar ?? 4;
-        const beatMs = msPerBeat(bpm);
-        try {
-          await ui.ensureReady({ needsProject: true });
-          // rewind and VERIFY via the LCD position readout — an unverified
-          // rewind silently shifts each layer further right on the timeline
-          const pos = await rewindVerified();
-          if (pos !== null && pos > 1.01) {
-            throw new GBError(
-              "ELEMENT_NOT_FOUND",
-              `Playhead still reads position ${pos} after rewinding — recording would land at the wrong bar.`,
-              "Check gb_ui_state / gb_screenshot for a dialog or focused field swallowing keystrokes, then retry.",
-            );
-          }
-          await ui.keystroke("r"); // start recording
-          const waitMs = bars * bpb * beatMs + (startLatencyMs ?? 150);
-          await sleep(waitMs);
-          const n = await playEvents(events, bpm, tempoMap ?? []);
-          await sleep(NOTE_TAIL_MS);
-          await ui.keyCode(ui.KEY.SPACE); // stop
-          return ok(
-            `Recorded ${n} notes (${sequenceLengthBeats(events).toFixed(2)} beats at ${bpm} BPM) onto the selected track. ` +
-              "Press gb_go_to_beginning + gb_play to hear it. If timing is off, adjust startLatencyMs or verify the project tempo and count-in setting match the parameters.",
-          );
-        } catch (e) {
-          // never leave the transport recording or notes hanging on failure
-          panic();
-          try {
-            await ui.keyCode(ui.KEY.SPACE);
-          } catch {
-            /* best effort */
-          }
-          throw e;
-        }
-      }),
+      guarded(async () =>
+        ok(await recordSequenceFlow(events, { tempo, tempoMap, countInBars, beatsPerBar, startLatencyMs })),
+      ),
   );
 
   server.registerTool(

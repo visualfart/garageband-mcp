@@ -8,6 +8,7 @@ import { registerComposeTools } from "./tools/compose.js";
 import { registerTempoTools } from "./tools/tempo.js";
 import { registerMixTools } from "./tools/mix.js";
 import { registerLoopTools } from "./tools/loops.js";
+import { registerImportTools } from "./tools/import.js";
 import { registerExportTools } from "./tools/export.js";
 import { registerInspectTools } from "./tools/inspect.js";
 import { closeMidi } from "./midi.js";
@@ -26,6 +27,7 @@ registerComposeTools(server);
 registerTempoTools(server);
 registerMixTools(server);
 registerLoopTools(server);
+registerImportTools(server);
 registerExportTools(server);
 
 function shutdown(): void {

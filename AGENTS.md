@@ -118,6 +118,24 @@ gb_undo                                → if it landed wrong
 
 Loops + recorded MIDI layers mix freely. To reposition a loop precisely, tell the user — region dragging is not yet reliable enough to automate.
 
+## 7.5 Importing open-source MIDI & samples
+
+**MIDI → GarageBand, fully automated.** `gb_import_midi {url}` parses any open-licensed `.mid` into layers; then it's the standard golden path with the composition already written:
+
+```
+gb_import_midi {url: "https://.../bach-invention-1.mid"}   → summary: tempo, layers, note counts
+gb_set_tempo {bpm: <the import's tempo>}                    ← MUST match, or notes land off-grid
+gb_play_imported                                            ← audition the whole piece first
+For each layer worth keeping:
+  gb_add_software_instrument_track → gb_set_track_instrument → gb_record_imported {layer: N}
+```
+
+The import summary flags truncation and tempo changes. `gb_imported_events {layer}` returns raw events when you want to trim, transpose, or re-voice before recording (edit them, then use plain `gb_record_sequence`). Skip near-empty layers; classical piano MIDI often splits left/right hand into two layers — two tracks with the same piano patch is faithful.
+
+**Licensing is your responsibility.** Use public-domain/CC sources — Mutopia Project, piano-midi.de, Wikimedia Commons. Most "free MIDI" sites host transcriptions of copyrighted songs; do not pull those. When a source requires attribution, put the credit in your response and suggest the user keep it with the exported music.
+
+**Audio samples** via Freesound (needs `FREESOUND_API_KEY` — if it's missing, the error tells the user how to get one). `gb_search_freesound` defaults to CC0; `gb_download_sample` saves an MP3 to `~/Music/GarageBand MCP Samples/` and reports any required credit. You cannot script the import — tell the user to drag the file from Finder into the tracks area, and pass along the attribution line for CC-BY sounds.
+
 ## 8. Error recovery
 
 Every error carries a `[CODE]` and a hint. The playbook:
