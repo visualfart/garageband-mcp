@@ -1,0 +1,187 @@
+{
+  "name": "First Light",
+  "description": "Slow ambient piece: a low drone, overlapping suspended pads with staggered entries, a sparse high piano motif, and a shimmer arpeggio that surfaces in the final bars. Everything lives in the velocity range 34-52 — quiet is the point.",
+  "tempo": 60,
+  "layers": [
+    {
+      "name": "drone",
+      "channel": 1,
+      "events": [
+        {
+          "note": "C2",
+          "startBeat": 0,
+          "durationBeats": 23.5,
+          "velocity": 46
+        },
+        {
+          "note": "G2",
+          "startBeat": 8,
+          "durationBeats": 15.5,
+          "velocity": 40
+        }
+      ]
+    },
+    {
+      "name": "pads",
+      "channel": 2,
+      "events": [
+        {
+          "notes": [
+            "C3",
+            "D3",
+            "G3"
+          ],
+          "startBeat": 0,
+          "durationBeats": 9,
+          "velocity": 48
+        },
+        {
+          "notes": [
+            "C4",
+            "D4"
+          ],
+          "startBeat": 2,
+          "durationBeats": 8,
+          "velocity": 42
+        },
+        {
+          "notes": [
+            "A2",
+            "C3",
+            "E3",
+            "G3"
+          ],
+          "startBeat": 8,
+          "durationBeats": 9,
+          "velocity": 52
+        },
+        {
+          "notes": [
+            "B3",
+            "E4"
+          ],
+          "startBeat": 10,
+          "durationBeats": 7,
+          "velocity": 44
+        },
+        {
+          "notes": [
+            "F2",
+            "A2",
+            "C3",
+            "E3"
+          ],
+          "startBeat": 16,
+          "durationBeats": 8,
+          "velocity": 50
+        },
+        {
+          "notes": [
+            "G3",
+            "C4",
+            "D4"
+          ],
+          "startBeat": 18,
+          "durationBeats": 6,
+          "velocity": 42
+        }
+      ]
+    },
+    {
+      "name": "piano",
+      "channel": 3,
+      "events": [
+        {
+          "note": "E5",
+          "startBeat": 2,
+          "durationBeats": 2.5,
+          "velocity": 52
+        },
+        {
+          "note": "G5",
+          "startBeat": 5.5,
+          "durationBeats": 2,
+          "velocity": 44
+        },
+        {
+          "note": "D5",
+          "startBeat": 9,
+          "durationBeats": 3,
+          "velocity": 50
+        },
+        {
+          "note": "C5",
+          "startBeat": 13.5,
+          "durationBeats": 2.5,
+          "velocity": 42
+        },
+        {
+          "note": "A4",
+          "startBeat": 17,
+          "durationBeats": 3,
+          "velocity": 46
+        },
+        {
+          "note": "G4",
+          "startBeat": 21,
+          "durationBeats": 3,
+          "velocity": 38
+        }
+      ]
+    },
+    {
+      "name": "shimmer strings",
+      "channel": 4,
+      "events": [
+        {
+          "note": "C4",
+          "startBeat": 16,
+          "durationBeats": 1.8,
+          "velocity": 34
+        },
+        {
+          "note": "E4",
+          "startBeat": 17,
+          "durationBeats": 1.8,
+          "velocity": 37
+        },
+        {
+          "note": "G4",
+          "startBeat": 18,
+          "durationBeats": 1.8,
+          "velocity": 40
+        },
+        {
+          "note": "B4",
+          "startBeat": 19,
+          "durationBeats": 1.8,
+          "velocity": 43
+        },
+        {
+          "note": "C5",
+          "startBeat": 20,
+          "durationBeats": 1.8,
+          "velocity": 46
+        },
+        {
+          "note": "B4",
+          "startBeat": 21,
+          "durationBeats": 1.8,
+          "velocity": 49
+        },
+        {
+          "note": "G4",
+          "startBeat": 22,
+          "durationBeats": 1.8,
+          "velocity": 52
+        },
+        {
+          "note": "E4",
+          "startBeat": 23,
+          "durationBeats": 1.8,
+          "velocity": 55
+        }
+      ]
+    }
+  ]
+}

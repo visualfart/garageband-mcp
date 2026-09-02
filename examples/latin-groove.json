@@ -1,0 +1,561 @@
+{
+  "name": "Calle Ocho",
+  "description": "Afro-Cuban groove: 3-2 son clave on rimshot, cowbell pulse, conga tumbao on the tom voices, anticipated bass, and a syncopated piano montuno. A study in interlocking syncopation — every layer leaves space for the others.",
+  "tempo": 100,
+  "layers": [
+    {
+      "name": "percussion",
+      "channel": 10,
+      "events": [
+        {
+          "note": "rimshot",
+          "startBeat": 0,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 1.5,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 3,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 5,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 6,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 8,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 9.5,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 11,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 13,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "rimshot",
+          "startBeat": 14,
+          "durationBeats": 0.3,
+          "velocity": 92
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 0,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 1,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 2,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 3,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 4,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 5,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 6,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 7,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 8,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 9,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 10,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 11,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 12,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 13,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 14,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "cowbell",
+          "startBeat": 15,
+          "durationBeats": 0.3,
+          "velocity": 66
+        },
+        {
+          "note": "tommid",
+          "startBeat": 0.5,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 1.75,
+          "durationBeats": 0.3,
+          "velocity": 78
+        },
+        {
+          "note": "tommid",
+          "startBeat": 2.5,
+          "durationBeats": 0.3,
+          "velocity": 58
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 3,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 3.5,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "tommid",
+          "startBeat": 4.5,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 5.75,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "tommid",
+          "startBeat": 6.5,
+          "durationBeats": 0.3,
+          "velocity": 58
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 7,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 7.5,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "tommid",
+          "startBeat": 8.5,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 9.75,
+          "durationBeats": 0.3,
+          "velocity": 78
+        },
+        {
+          "note": "tommid",
+          "startBeat": 10.5,
+          "durationBeats": 0.3,
+          "velocity": 58
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 11,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 11.5,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "tommid",
+          "startBeat": 12.5,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "tomlow",
+          "startBeat": 13.75,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "tommid",
+          "startBeat": 14.5,
+          "durationBeats": 0.3,
+          "velocity": 58
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 15,
+          "durationBeats": 0.3,
+          "velocity": 84
+        },
+        {
+          "note": "tomhigh",
+          "startBeat": 15.5,
+          "durationBeats": 0.3,
+          "velocity": 88
+        }
+      ]
+    },
+    {
+      "name": "bass",
+      "channel": 2,
+      "events": [
+        {
+          "note": "C2",
+          "startBeat": 0,
+          "durationBeats": 0.6,
+          "velocity": 100
+        },
+        {
+          "note": "G2",
+          "startBeat": 1.5,
+          "durationBeats": 0.8,
+          "velocity": 88
+        },
+        {
+          "note": "C2",
+          "startBeat": 2.5,
+          "durationBeats": 1.4,
+          "velocity": 104
+        },
+        {
+          "note": "C2",
+          "startBeat": 4,
+          "durationBeats": 0.6,
+          "velocity": 100
+        },
+        {
+          "note": "G2",
+          "startBeat": 5.5,
+          "durationBeats": 0.8,
+          "velocity": 88
+        },
+        {
+          "note": "C2",
+          "startBeat": 6.5,
+          "durationBeats": 1.4,
+          "velocity": 104
+        },
+        {
+          "note": "F2",
+          "startBeat": 8,
+          "durationBeats": 0.6,
+          "velocity": 100
+        },
+        {
+          "note": "C3",
+          "startBeat": 9.5,
+          "durationBeats": 0.8,
+          "velocity": 88
+        },
+        {
+          "note": "F2",
+          "startBeat": 10.5,
+          "durationBeats": 1.4,
+          "velocity": 104
+        },
+        {
+          "note": "F2",
+          "startBeat": 12,
+          "durationBeats": 0.6,
+          "velocity": 100
+        },
+        {
+          "note": "C3",
+          "startBeat": 13.5,
+          "durationBeats": 0.8,
+          "velocity": 88
+        },
+        {
+          "note": "F2",
+          "startBeat": 14.5,
+          "durationBeats": 1.4,
+          "velocity": 104
+        }
+      ]
+    },
+    {
+      "name": "montuno piano",
+      "channel": 3,
+      "events": [
+        {
+          "notes": [
+            "C4",
+            "E4"
+          ],
+          "startBeat": 0,
+          "durationBeats": 0.4,
+          "velocity": 84
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 0.75,
+          "durationBeats": 0.4,
+          "velocity": 76
+        },
+        {
+          "notes": [
+            "C5",
+            "E5"
+          ],
+          "startBeat": 1.5,
+          "durationBeats": 0.4,
+          "velocity": 88
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 2.25,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "E4"
+          ],
+          "startBeat": 3,
+          "durationBeats": 0.4,
+          "velocity": 84
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 3.75,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "F4"
+          ],
+          "startBeat": 4.5,
+          "durationBeats": 0.4,
+          "velocity": 86
+        },
+        {
+          "notes": [
+            "A4"
+          ],
+          "startBeat": 5.25,
+          "durationBeats": 0.4,
+          "velocity": 76
+        },
+        {
+          "notes": [
+            "C5",
+            "F5"
+          ],
+          "startBeat": 6,
+          "durationBeats": 0.4,
+          "velocity": 90
+        },
+        {
+          "notes": [
+            "A4"
+          ],
+          "startBeat": 6.75,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "F4"
+          ],
+          "startBeat": 7.5,
+          "durationBeats": 0.4,
+          "velocity": 84
+        },
+        {
+          "notes": [
+            "C4",
+            "E4"
+          ],
+          "startBeat": 8,
+          "durationBeats": 0.4,
+          "velocity": 84
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 8.75,
+          "durationBeats": 0.4,
+          "velocity": 76
+        },
+        {
+          "notes": [
+            "C5",
+            "E5"
+          ],
+          "startBeat": 9.5,
+          "durationBeats": 0.4,
+          "velocity": 88
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 10.25,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "E4"
+          ],
+          "startBeat": 11,
+          "durationBeats": 0.4,
+          "velocity": 84
+        },
+        {
+          "notes": [
+            "G4"
+          ],
+          "startBeat": 11.75,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "F4"
+          ],
+          "startBeat": 12.5,
+          "durationBeats": 0.4,
+          "velocity": 86
+        },
+        {
+          "notes": [
+            "A4"
+          ],
+          "startBeat": 13.25,
+          "durationBeats": 0.4,
+          "velocity": 76
+        },
+        {
+          "notes": [
+            "C5",
+            "F5"
+          ],
+          "startBeat": 14,
+          "durationBeats": 0.4,
+          "velocity": 90
+        },
+        {
+          "notes": [
+            "A4"
+          ],
+          "startBeat": 14.75,
+          "durationBeats": 0.4,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C4",
+            "F4"
+          ],
+          "startBeat": 15.5,
+          "durationBeats": 0.4,
+          "velocity": 84
+        }
+      ]
+    }
+  ]
+}

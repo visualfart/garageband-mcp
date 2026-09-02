@@ -1,31 +1,37 @@
 # Example music
 
-Ready-made music you can stream into GarageBand — from a one-finger melody to full multi-layer arrangements with builds, drops, risers, and tempo ramps. They double as format documentation for any agent generating music.
+Twelve pieces across genres — from a one-finger melody to full multi-layer arrangements — doubling as format documentation for any agent that generates music. **Click any waveform to listen** (GitHub opens the MP3 with a player). Previews are synthesized straight from the JSON by `scripts/render-previews.mjs`, so what you hear is exactly what the MIDI plays; GarageBand's instruments sound far better.
 
-Every example has an MP3 preview in [`audio/`](audio/) (synthesized straight from the JSON with `scripts/render-previews.mjs`, so what you hear is exactly what the MIDI plays — GarageBand's instruments will sound far better).
+For end-to-end recipes — importing MIDI from the internet, layering Apple Loops, Freesound textures — see **[workflows.md](workflows.md)**.
 
-## Full arrangements (multi-layer)
+## Full arrangements
 
-| File | Listen | What's inside |
-|---|---|---|
-| [`edm-anthem.json`](edm-anthem.json) | [▶ mp3](audio/edm-anthem.mp3) | **"Neon Skyline"** — 5 layers (drums, bass, chords, lead, FX). Intro pads → build with accelerating snare roll + riser → drop with bass groove, chord stabs and a lead hook → fall + ritardando outro (128→92 BPM) |
-| [`cinematic-swell.json`](cinematic-swell.json) | [▶ mp3](audio/cinematic-swell.mp3) | **"Dawn Over Ice"** — 4 layers (low/mid/high strings, percussion). Swelling bows → rising theme with accelerando (70→84 BPM) → timpani roll into the climax → falling resolution with ritardando |
+| Listen | Piece |
+|---|---|
+| [![Neon Skyline](audio/waves/edm-anthem.svg)](audio/edm-anthem.mp3) | **Neon Skyline** · [`edm-anthem.json`](edm-anthem.json) · 128 BPM, 5 layers<br>EDM: intro pads → build with accelerating snare roll + riser → drop with bass groove and lead hook → fall + ritardando outro |
+| [![Blue Hour](audio/waves/jazz-swing.svg)](audio/jazz-swing.mp3) | **Blue Hour** · [`jazz-swing.json`](jazz-swing.json) · 140 BPM, 3 layers<br>Swing: spang-a-lang ride, brush ghosts, walking ii-V-I-VI bass, Charleston comping — swung 8ths placed off-grid at +0.67 |
+| [![Voltage Corridor](audio/waves/acid-techno.svg)](audio/acid-techno.mp3) | **Voltage Corridor** · [`acid-techno.json`](acid-techno.json) · 130 BPM, 3 layers<br>Acid techno: 303-style riff with a **CC74 filter-cutoff ramp** opening and closing across the bars — expression events in action |
+| [![Calle Ocho](audio/waves/latin-groove.svg)](audio/latin-groove.mp3) | **Calle Ocho** · [`latin-groove.json`](latin-groove.json) · 100 BPM, 3 layers<br>Afro-Cuban: 3-2 son clave, cowbell, conga tumbao, anticipated bass, piano montuno — interlocking syncopation |
+| [![Stadium Lights](audio/waves/rock-anthem.svg)](audio/rock-anthem.mp3) | **Stadium Lights** · [`rock-anthem.json`](rock-anthem.json) · 120 BPM, 4 layers<br>Rock: E-C-G-D power-chord chug with accent structure, locked bass, snare-into-toms fill, anthem melody |
+| [![First Light](audio/waves/ambient-dawn.svg)](audio/ambient-dawn.mp3) | **First Light** · [`ambient-dawn.json`](ambient-dawn.json) · 60 BPM, 4 layers<br>Ambient: drone, overlapping suspended pads, sparse piano, shimmer arpeggio — everything at velocity 34-52 |
+| [![Dawn Over Ice](audio/waves/cinematic-swell.svg)](audio/cinematic-swell.mp3) | **Dawn Over Ice** · [`cinematic-swell.json`](cinematic-swell.json) · 70 BPM, 4 layers<br>Cinematic strings: swelling bows, rising theme with accelerando, timpani roll into the climax, ritardando resolution |
+| [![Prelude in C](audio/waves/bach-prelude.svg)](audio/bach-prelude.mp3) | **Prelude in C (BWV 846)** · [`bach-prelude.json`](bach-prelude.json) · 60 BPM, 2 layers<br>J.S. Bach, imported from the [Mutopia Project](https://www.mutopiaproject.org) (public domain) with `gb_import_midi` and saved as-is — two hands, two layers |
 
 ## Single sequences
 
-| File | Listen | What it is | Suggested patch |
-|---|---|---|---|
-| [`twinkle.json`](twinkle.json) | [▶ mp3](audio/twinkle.mp3) | Simple melody, the "hello world" test | any keyboard |
-| [`lofi-chords.json`](lofi-chords.json) | [▶ mp3](audio/lofi-chords.mp3) | Fmaj7–Em7–Dm7–Cmaj7 at 72 BPM | electric piano |
-| [`funk-bassline.json`](funk-bassline.json) | [▶ mp3](audio/funk-bassline.mp3) | Syncopated C-minor groove | fingerstyle bass |
-| [`drum-groove.json`](drum-groove.json) | [▶ mp3](audio/drum-groove.mp3) | Two-bar boom-bap beat | **Drum Kit** track |
+| Listen | Piece |
+|---|---|
+| [![Twinkle](audio/waves/twinkle.svg)](audio/twinkle.mp3) | **Twinkle Twinkle** · [`twinkle.json`](twinkle.json) — the "hello world" test |
+| [![Lo-fi chords](audio/waves/lofi-chords.svg)](audio/lofi-chords.mp3) | **Lo-fi chords** · [`lofi-chords.json`](lofi-chords.json) — Fmaj7–Em7–Dm7–Cmaj7 at 72 BPM |
+| [![Funk bassline](audio/waves/funk-bassline.svg)](audio/funk-bassline.mp3) | **Funk bassline** · [`funk-bassline.json`](funk-bassline.json) — syncopated C-minor groove |
+| [![Drum groove](audio/waves/drum-groove.svg)](audio/drum-groove.mp3) | **Drum groove** · [`drum-groove.json`](drum-groove.json) — two-bar boom-bap beat |
 
 ## Try one without an MCP client
 
 Build first (`npm install && npm run build`), open GarageBand with a software-instrument track selected, then:
 
 ```bash
-node examples/play.mjs examples/edm-anthem.json
+node examples/play.mjs examples/jazz-swing.json
 ```
 
 - Multi-layer songs play as a full mix on the selected instrument (GarageBand routes live MIDI to one track).
@@ -53,27 +59,23 @@ A **sequence** is `tempo` + `events` on a beat grid — what `gb_play_sequence` 
       ]
     },
     {
-      "name": "chords",
-      "channel": 3,
+      "name": "acid bass",
+      "channel": 2,
       "events": [
-        { "notes": ["A2", "C3", "E3", "G3"], "startBeat": 0, "durationBeats": 4, "velocity": 70 }
+        { "note": "C2", "startBeat": 0, "durationBeats": 0.2, "velocity": 112 },
+        { "cc": { "controller": 74, "value": 25, "endValue": 120 }, "startBeat": 0, "durationBeats": 8 }
       ]
     }
   ]
 }
 ```
 
-- `note` — a name (`"C4"`, `"F#3"`, `"Bb2"`), a drum alias (`kick`, `snare`, `hihat`, `openhat`, `clap`, `crash`, `ride`, `tomlow`, …), or a raw MIDI number 0–127
+- `note` — a name (`"C4"`, `"F#3"`, `"Bb2"`), a drum alias (`kick`, `snare`, `hihat`, `openhat`, `clap`, `crash`, `ride`, `rimshot`, `cowbell`, `tomlow`, …), or a raw MIDI number 0–127
 - `notes` — several notes at once (a chord)
-- `startBeat` / `durationBeats` — position and length in beats; fractions welcome (`0.25` = sixteenth at 4/4)
+- `cc` / `bend` — expression instead of a note: control-change or pitch-bend, with `endValue` for a linear ramp across `durationBeats` (filter sweeps, swells, pitch drops)
+- `startBeat` / `durationBeats` — position and length in beats; fractions welcome (`0.25` = sixteenth; `0.67` = a swung "and")
 - `velocity` — 1–127, default 100; ramp it across notes for crescendos, builds, and risers
-- `tempoMap` — tempo changes at beats; `"ramp": true` glides linearly from the previous tempo, arriving at that beat (accelerando/ritardando). To ramp only near the end, pin the old tempo first, as above
+- `tempoMap` — tempo changes at beats; `"ramp": true` glides linearly from the previous tempo, arriving at that beat. To ramp only near the end, pin the old tempo first, as above
 - `layers` — named parts, each with a default MIDI `channel`
 
-Musical devices used in the arrangements, all expressible with plain notes:
-
-- **Riser** — ascending 16th-note scale run with velocity ramping up (see `fx` layer of the EDM anthem, beats 8–16)
-- **Fall** — the same descending with velocity ramping down (beats 32+)
-- **Build** — snare roll subdividing from 8ths to 16ths with rising velocity
-- **Drop** — everything lands together on a downbeat after the build, with a crash
-- **Swell** — repeated string bows with stepwise rising velocity (cinematic piece, beats 0–16)
+Musical devices used across the examples, all expressible with plain events: **riser** (ascending 16ths, velocity ramping up — EDM anthem), **fall** (the reverse), **build roll** (snare 8ths→16ths), **swell** (repeated bows, stepped velocity — cinematic), **filter sweep** (CC74 ramp — acid techno), **swing** (8th pairs at +0.67 — jazz), **clave & montuno** (interlocked syncopation — latin), **accent chug** (velocity-patterned 8ths — rock).

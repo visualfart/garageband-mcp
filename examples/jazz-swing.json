@@ -1,0 +1,425 @@
+{
+  "name": "Blue Hour",
+  "description": "Four bars of swing: spang-a-lang ride with brush ghosts, a walking ii-V-I-VI bassline, and Charleston-style piano comping. Swung 8ths live off-grid at +0.67 of a beat — no swing switch needed, just place the notes where they belong.",
+  "tempo": 140,
+  "layers": [
+    {
+      "name": "drums",
+      "channel": 10,
+      "events": [
+        {
+          "note": "ride",
+          "startBeat": 0,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 1,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "ride",
+          "startBeat": 1.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "ride",
+          "startBeat": 2,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 3,
+          "durationBeats": 0.3,
+          "velocity": 82
+        },
+        {
+          "note": "ride",
+          "startBeat": 3.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 1,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 3,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "ride",
+          "startBeat": 4,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 5,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "ride",
+          "startBeat": 5.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "ride",
+          "startBeat": 6,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 7,
+          "durationBeats": 0.3,
+          "velocity": 82
+        },
+        {
+          "note": "ride",
+          "startBeat": 7.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 5,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 7,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "snare",
+          "startBeat": 5.67,
+          "durationBeats": 0.2,
+          "velocity": 42
+        },
+        {
+          "note": "snare",
+          "startBeat": 7.5,
+          "durationBeats": 0.2,
+          "velocity": 38
+        },
+        {
+          "note": "ride",
+          "startBeat": 8,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 9,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "ride",
+          "startBeat": 9.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "ride",
+          "startBeat": 10,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 11,
+          "durationBeats": 0.3,
+          "velocity": 82
+        },
+        {
+          "note": "ride",
+          "startBeat": 11.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 9,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 11,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "ride",
+          "startBeat": 12,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 13,
+          "durationBeats": 0.3,
+          "velocity": 80
+        },
+        {
+          "note": "ride",
+          "startBeat": 13.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "ride",
+          "startBeat": 14,
+          "durationBeats": 0.3,
+          "velocity": 88
+        },
+        {
+          "note": "ride",
+          "startBeat": 15,
+          "durationBeats": 0.3,
+          "velocity": 82
+        },
+        {
+          "note": "ride",
+          "startBeat": 15.67,
+          "durationBeats": 0.3,
+          "velocity": 62
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 13,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "pedalhat",
+          "startBeat": 15,
+          "durationBeats": 0.3,
+          "velocity": 70
+        },
+        {
+          "note": "snare",
+          "startBeat": 13.67,
+          "durationBeats": 0.2,
+          "velocity": 42
+        },
+        {
+          "note": "snare",
+          "startBeat": 15.5,
+          "durationBeats": 0.2,
+          "velocity": 38
+        }
+      ]
+    },
+    {
+      "name": "bass",
+      "channel": 2,
+      "events": [
+        {
+          "note": "D2",
+          "startBeat": 0,
+          "durationBeats": 0.9,
+          "velocity": 84
+        },
+        {
+          "note": "F2",
+          "startBeat": 1,
+          "durationBeats": 0.9,
+          "velocity": 89
+        },
+        {
+          "note": "A2",
+          "startBeat": 2,
+          "durationBeats": 0.9,
+          "velocity": 94
+        },
+        {
+          "note": "C3",
+          "startBeat": 3,
+          "durationBeats": 0.9,
+          "velocity": 84
+        },
+        {
+          "note": "G2",
+          "startBeat": 4,
+          "durationBeats": 0.9,
+          "velocity": 89
+        },
+        {
+          "note": "B2",
+          "startBeat": 5,
+          "durationBeats": 0.9,
+          "velocity": 94
+        },
+        {
+          "note": "D3",
+          "startBeat": 6,
+          "durationBeats": 0.9,
+          "velocity": 84
+        },
+        {
+          "note": "F2",
+          "startBeat": 7,
+          "durationBeats": 0.9,
+          "velocity": 89
+        },
+        {
+          "note": "C2",
+          "startBeat": 8,
+          "durationBeats": 0.9,
+          "velocity": 94
+        },
+        {
+          "note": "E2",
+          "startBeat": 9,
+          "durationBeats": 0.9,
+          "velocity": 84
+        },
+        {
+          "note": "G2",
+          "startBeat": 10,
+          "durationBeats": 0.9,
+          "velocity": 89
+        },
+        {
+          "note": "A2",
+          "startBeat": 11,
+          "durationBeats": 0.9,
+          "velocity": 94
+        },
+        {
+          "note": "A2",
+          "startBeat": 12,
+          "durationBeats": 0.9,
+          "velocity": 84
+        },
+        {
+          "note": "C#3",
+          "startBeat": 13,
+          "durationBeats": 0.9,
+          "velocity": 89
+        },
+        {
+          "note": "E3",
+          "startBeat": 14,
+          "durationBeats": 0.9,
+          "velocity": 94
+        },
+        {
+          "note": "G2",
+          "startBeat": 15,
+          "durationBeats": 0.9,
+          "velocity": 84
+        }
+      ]
+    },
+    {
+      "name": "piano",
+      "channel": 3,
+      "events": [
+        {
+          "notes": [
+            "D3",
+            "F3",
+            "A3",
+            "C4"
+          ],
+          "startBeat": 0.67,
+          "durationBeats": 0.8,
+          "velocity": 72
+        },
+        {
+          "notes": [
+            "D3",
+            "F3",
+            "A3",
+            "C4"
+          ],
+          "startBeat": 2,
+          "durationBeats": 1.2,
+          "velocity": 66
+        },
+        {
+          "notes": [
+            "G3",
+            "B3",
+            "D4",
+            "F4"
+          ],
+          "startBeat": 4.67,
+          "durationBeats": 0.8,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "G3",
+            "B3",
+            "D4",
+            "F4"
+          ],
+          "startBeat": 6.5,
+          "durationBeats": 1,
+          "velocity": 64
+        },
+        {
+          "notes": [
+            "E3",
+            "G3",
+            "B3",
+            "D4"
+          ],
+          "startBeat": 8.67,
+          "durationBeats": 0.8,
+          "velocity": 70
+        },
+        {
+          "notes": [
+            "E3",
+            "G3",
+            "B3",
+            "D4"
+          ],
+          "startBeat": 10,
+          "durationBeats": 1.2,
+          "velocity": 62
+        },
+        {
+          "notes": [
+            "C#3",
+            "E3",
+            "G3",
+            "A3"
+          ],
+          "startBeat": 12.67,
+          "durationBeats": 0.8,
+          "velocity": 74
+        },
+        {
+          "notes": [
+            "C#3",
+            "E3",
+            "G3",
+            "A3"
+          ],
+          "startBeat": 14,
+          "durationBeats": 1.5,
+          "velocity": 68
+        }
+      ]
+    }
+  ]
+}

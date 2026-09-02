@@ -14,7 +14,17 @@ GarageBand has no scripting API, so this server combines three techniques:
 
 The agent does this with `gb_new_project` → `gb_set_tempo` → `gb_record_sequence` → `gb_add_software_instrument_track` → `gb_record_sequence` → `gb_export_song`.
 
-Ready-made music lives in [`examples/`](examples/) — from a simple melody to full multi-layer arrangements — each with an **MP3 preview** in [`examples/audio/`](examples/audio/) so you can hear it before running anything. A standalone player streams any of them into GarageBand without an MCP client:
+## Hear it
+
+Twelve example pieces across genres live in [`examples/`](examples/), each with an MP3 preview synthesized from its JSON — **click a waveform to listen**:
+
+| | | |
+|---|---|---|
+| [![EDM](examples/audio/waves/edm-anthem.svg)](examples/audio/edm-anthem.mp3)<br>**Neon Skyline** — EDM build & drop | [![Jazz](examples/audio/waves/jazz-swing.svg)](examples/audio/jazz-swing.mp3)<br>**Blue Hour** — swing trio | [![Acid](examples/audio/waves/acid-techno.svg)](examples/audio/acid-techno.mp3)<br>**Voltage Corridor** — acid + filter sweep |
+| [![Latin](examples/audio/waves/latin-groove.svg)](examples/audio/latin-groove.mp3)<br>**Calle Ocho** — clave & montuno | [![Rock](examples/audio/waves/rock-anthem.svg)](examples/audio/rock-anthem.mp3)<br>**Stadium Lights** — power chords | [![Cinematic](examples/audio/waves/cinematic-swell.svg)](examples/audio/cinematic-swell.mp3)<br>**Dawn Over Ice** — strings & swells |
+| [![Ambient](examples/audio/waves/ambient-dawn.svg)](examples/audio/ambient-dawn.mp3)<br>**First Light** — ambient | [![Bach](examples/audio/waves/bach-prelude.svg)](examples/audio/bach-prelude.mp3)<br>**Prelude in C** — imported via `gb_import_midi` | [and four more →](examples/) |
+
+End-to-end recipes — MIDI import, Apple Loops, Freesound textures, sound design — are in [`examples/workflows.md`](examples/workflows.md). A standalone player streams any example into GarageBand without an MCP client:
 
 ```bash
 node examples/play.mjs examples/edm-anthem.json

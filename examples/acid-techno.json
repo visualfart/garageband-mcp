@@ -1,0 +1,900 @@
+{
+  "name": "Voltage Corridor",
+  "description": "Four-on-the-floor techno with a 303-style acid riff whose CC74 filter-cutoff ramp opens across the first 8 beats and closes over the next 8 — a real filter sweep encoded as cc events. The synthesized preview approximates the sweep; a GarageBand synth patch with a cutoff mapping does it properly.",
+  "tempo": 130,
+  "layers": [
+    {
+      "name": "drums",
+      "channel": 10,
+      "events": [
+        {
+          "note": "kick",
+          "startBeat": 0,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 0.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 0.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 0.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 1,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 1.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 1,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 1.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 1.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 2,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 2.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 2.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 2.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 3,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 3.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 3,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 3.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 3.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 4,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 4.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 4.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 4.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 5,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 5.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 5,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 5.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 5.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 6,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 6.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 6.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 6.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 7,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 7.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 7,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 7.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 7.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 8,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 8.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 8.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 8.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 9,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 9.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 9,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 9.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 9.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 10,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 10.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 10.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 10.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 11,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 11.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 11,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 11.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 11.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 12,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 12.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 12.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 12.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 13,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 13.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 13,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 13.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 13.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 14,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 14.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "hihat",
+          "startBeat": 14.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 14.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "kick",
+          "startBeat": 15,
+          "durationBeats": 0.4,
+          "velocity": 116
+        },
+        {
+          "note": "openhat",
+          "startBeat": 15.5,
+          "durationBeats": 0.35,
+          "velocity": 74
+        },
+        {
+          "note": "clap",
+          "startBeat": 15,
+          "durationBeats": 0.4,
+          "velocity": 102
+        },
+        {
+          "note": "hihat",
+          "startBeat": 15.25,
+          "durationBeats": 0.15,
+          "velocity": 48
+        },
+        {
+          "note": "hihat",
+          "startBeat": 15.75,
+          "durationBeats": 0.15,
+          "velocity": 48
+        }
+      ]
+    },
+    {
+      "name": "acid bass",
+      "channel": 2,
+      "events": [
+        {
+          "note": "C2",
+          "startBeat": 0,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "C2",
+          "startBeat": 0.25,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C3",
+          "startBeat": 0.5,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "C2",
+          "startBeat": 0.75,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 1,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 1.25,
+          "durationBeats": 0.2,
+          "velocity": 58
+        },
+        {
+          "note": "G2",
+          "startBeat": 1.5,
+          "durationBeats": 0.2,
+          "velocity": 70
+        },
+        {
+          "note": "Bb2",
+          "startBeat": 1.75,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C2",
+          "startBeat": 2,
+          "durationBeats": 0.2,
+          "velocity": 62
+        },
+        {
+          "note": "C3",
+          "startBeat": 2.25,
+          "durationBeats": 0.2,
+          "velocity": 110
+        },
+        {
+          "note": "C2",
+          "startBeat": 2.5,
+          "durationBeats": 0.2,
+          "velocity": 56
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 2.75,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "G2",
+          "startBeat": 3,
+          "durationBeats": 0.2,
+          "velocity": 114
+        },
+        {
+          "note": "F2",
+          "startBeat": 3.25,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 3.5,
+          "durationBeats": 0.2,
+          "velocity": 68
+        },
+        {
+          "note": "D2",
+          "startBeat": 3.75,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 4,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "C2",
+          "startBeat": 4.25,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C3",
+          "startBeat": 4.5,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "C2",
+          "startBeat": 4.75,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 5,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 5.25,
+          "durationBeats": 0.2,
+          "velocity": 58
+        },
+        {
+          "note": "G2",
+          "startBeat": 5.5,
+          "durationBeats": 0.2,
+          "velocity": 70
+        },
+        {
+          "note": "Bb2",
+          "startBeat": 5.75,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C2",
+          "startBeat": 6,
+          "durationBeats": 0.2,
+          "velocity": 62
+        },
+        {
+          "note": "C3",
+          "startBeat": 6.25,
+          "durationBeats": 0.2,
+          "velocity": 110
+        },
+        {
+          "note": "C2",
+          "startBeat": 6.5,
+          "durationBeats": 0.2,
+          "velocity": 56
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 6.75,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "G2",
+          "startBeat": 7,
+          "durationBeats": 0.2,
+          "velocity": 114
+        },
+        {
+          "note": "F2",
+          "startBeat": 7.25,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 7.5,
+          "durationBeats": 0.2,
+          "velocity": 68
+        },
+        {
+          "note": "D2",
+          "startBeat": 7.75,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 8,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "C2",
+          "startBeat": 8.25,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C3",
+          "startBeat": 8.5,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "C2",
+          "startBeat": 8.75,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 9,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 9.25,
+          "durationBeats": 0.2,
+          "velocity": 58
+        },
+        {
+          "note": "G2",
+          "startBeat": 9.5,
+          "durationBeats": 0.2,
+          "velocity": 70
+        },
+        {
+          "note": "Bb2",
+          "startBeat": 9.75,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C2",
+          "startBeat": 10,
+          "durationBeats": 0.2,
+          "velocity": 62
+        },
+        {
+          "note": "C3",
+          "startBeat": 10.25,
+          "durationBeats": 0.2,
+          "velocity": 110
+        },
+        {
+          "note": "C2",
+          "startBeat": 10.5,
+          "durationBeats": 0.2,
+          "velocity": 56
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 10.75,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "G2",
+          "startBeat": 11,
+          "durationBeats": 0.2,
+          "velocity": 114
+        },
+        {
+          "note": "F2",
+          "startBeat": 11.25,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 11.5,
+          "durationBeats": 0.2,
+          "velocity": 68
+        },
+        {
+          "note": "D2",
+          "startBeat": 11.75,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 12,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "C2",
+          "startBeat": 12.25,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C3",
+          "startBeat": 12.5,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "C2",
+          "startBeat": 12.75,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 13,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "note": "C2",
+          "startBeat": 13.25,
+          "durationBeats": 0.2,
+          "velocity": 58
+        },
+        {
+          "note": "G2",
+          "startBeat": 13.5,
+          "durationBeats": 0.2,
+          "velocity": 70
+        },
+        {
+          "note": "Bb2",
+          "startBeat": 13.75,
+          "durationBeats": 0.2,
+          "velocity": 112
+        },
+        {
+          "note": "C2",
+          "startBeat": 14,
+          "durationBeats": 0.2,
+          "velocity": 62
+        },
+        {
+          "note": "C3",
+          "startBeat": 14.25,
+          "durationBeats": 0.2,
+          "velocity": 110
+        },
+        {
+          "note": "C2",
+          "startBeat": 14.5,
+          "durationBeats": 0.2,
+          "velocity": 56
+        },
+        {
+          "note": "Eb2",
+          "startBeat": 14.75,
+          "durationBeats": 0.2,
+          "velocity": 66
+        },
+        {
+          "note": "C3",
+          "startBeat": 15,
+          "durationBeats": 0.2,
+          "velocity": 114
+        },
+        {
+          "note": "C3",
+          "startBeat": 15.25,
+          "durationBeats": 0.2,
+          "velocity": 60
+        },
+        {
+          "note": "C3",
+          "startBeat": 15.5,
+          "durationBeats": 0.2,
+          "velocity": 68
+        },
+        {
+          "note": "C3",
+          "startBeat": 15.75,
+          "durationBeats": 0.2,
+          "velocity": 108
+        },
+        {
+          "cc": {
+            "controller": 74,
+            "value": 25,
+            "endValue": 120
+          },
+          "startBeat": 0,
+          "durationBeats": 8
+        },
+        {
+          "cc": {
+            "controller": 74,
+            "value": 120,
+            "endValue": 45
+          },
+          "startBeat": 8,
+          "durationBeats": 8
+        }
+      ]
+    },
+    {
+      "name": "stabs",
+      "channel": 3,
+      "events": [
+        {
+          "notes": [
+            "C4",
+            "Eb4",
+            "G4"
+          ],
+          "startBeat": 3.5,
+          "durationBeats": 0.3,
+          "velocity": 96
+        },
+        {
+          "notes": [
+            "C4",
+            "Eb4",
+            "G4"
+          ],
+          "startBeat": 7.5,
+          "durationBeats": 0.3,
+          "velocity": 96
+        },
+        {
+          "notes": [
+            "C4",
+            "Eb4",
+            "G4"
+          ],
+          "startBeat": 11.5,
+          "durationBeats": 0.3,
+          "velocity": 96
+        },
+        {
+          "notes": [
+            "C4",
+            "Eb4",
+            "G4",
+            "Bb4"
+          ],
+          "startBeat": 15.5,
+          "durationBeats": 0.5,
+          "velocity": 104
+        }
+      ]
+    }
+  ]
+}

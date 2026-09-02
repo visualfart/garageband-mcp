@@ -122,6 +122,29 @@ function renderDrum(buf, t0, midi, amp) {
   }
 }
 
+/** One-pole lowpass whose cutoff follows CC74 ramps — approximates the acid filter sweep. */
+function applyFilterSweep(pbuf, segs) {
+  segs.sort((a, b) => a.t0 - b.t0);
+  const ccAt = (t) => {
+    let v = segs[0].v0;
+    for (const s of segs) {
+      if (t >= s.t1) v = s.v1;
+      else if (t >= s.t0) return s.v0 + ((s.v1 - s.v0) * (t - s.t0)) / (s.t1 - s.t0);
+      else break;
+    }
+    return v;
+  };
+  let y = 0;
+  for (let i = 0; i < pbuf.length; i++) {
+    if (i % 64 === 0) {
+      const fc = 60 * Math.pow(2, (ccAt(i / SR) / 127) * 7); // 60 Hz .. ~7.7 kHz
+      applyFilterSweep.a = 1 - Math.exp((-2 * Math.PI * fc) / SR);
+    }
+    y += applyFilterSweep.a * (pbuf[i] - y);
+    pbuf[i] = y * 1.4; // make up gain lost to the filter
+  }
+}
+
 // ---- rendering --------------------------------------------------------------
 function kindForLayer(name = "") {
   if (/drum|perc|beat/i.test(name)) return "drums";
@@ -145,18 +168,33 @@ function renderFile(file) {
   const buf = new Float64Array(Math.ceil((lenSec + 2.5) * SR));
 
   for (const p of parts) {
+    const pbuf = new Float64Array(buf.length);
+    const ccSegs = []; // CC74 (filter cutoff) ramps → preview lowpass automation
     for (const e of p.events) {
-      if (e.cc || e.bend) continue; // expression gestures aren't rendered in previews
+      if (e.cc) {
+        if (e.cc.controller === 74) {
+          ccSegs.push({
+            t0: clock(e.startBeat) / 1000,
+            t1: clock(e.startBeat + e.durationBeats) / 1000,
+            v0: e.cc.value,
+            v1: e.cc.endValue ?? e.cc.value,
+          });
+        }
+        continue;
+      }
+      if (e.bend) continue; // bends aren't rendered in previews
       const notes = e.notes ?? [e.note];
       const amp = Math.pow((e.velocity ?? 100) / 127, 1.5);
       const t0 = clock(e.startBeat) / 1000;
       const t1 = clock(e.startBeat + e.durationBeats) / 1000;
       for (const n of notes) {
         const midi = parseNote(n);
-        if (p.kind === "drums") renderDrum(buf, t0, midi, amp);
-        else renderMelodic(buf, t0, t1, midi, amp, p.kind === "strings" ? "strings" : p.kind);
+        if (p.kind === "drums") renderDrum(pbuf, t0, midi, amp);
+        else renderMelodic(pbuf, t0, t1, midi, amp, p.kind === "strings" ? "strings" : p.kind);
       }
     }
+    if (ccSegs.length > 0) applyFilterSweep(pbuf, ccSegs);
+    for (let i = 0; i < buf.length; i++) buf[i] += pbuf[i];
   }
 
   // soft clip + normalize
